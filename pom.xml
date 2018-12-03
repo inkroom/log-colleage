@@ -8,5 +8,55 @@
     <artifactId>parent</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    
+
+    <properties>
+        <spring.version>5.1.2.RELEASE</spring.version>
+        <spring.group>org.springframework</spring.group>
+    </properties>
+
+    <modules>
+        <module>client</module>
+        <module>master</module>
+        <module>server</module>
+        <module>web</module>
+        <module>mq-api</module>
+        <module>activeMq</module>
+    </modules>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>cn.inkroom.log</groupId>
+            <artifactId>mq-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+    </dependencies>
+
 </project>

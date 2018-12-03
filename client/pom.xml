@@ -14,5 +14,31 @@
     <artifactId>client</artifactId>
     <version>1.0-SNAPSHOT</version>
     <description>client，用于客户端采集发送日志</description>
+    <packaging>jar</packaging>
 
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.inkroom.log</groupId>
+            <artifactId>mq-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.inkroom.log</groupId>
+            <artifactId>activeMq</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.inkroom.log</groupId>
+            <artifactId>model</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
