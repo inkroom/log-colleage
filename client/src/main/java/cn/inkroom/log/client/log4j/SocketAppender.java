@@ -70,7 +70,7 @@ public class SocketAppender extends AppenderSkeleton {
 
     @Override
     public void activateOptions() {
-
+        System.out.println("username=" + username + ", password=" + password);
         try {
             //创建一个链接工厂
             ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(username, password, url);
@@ -79,7 +79,7 @@ public class SocketAppender extends AppenderSkeleton {
             //开启链接
             connection.start();
             //创建一个事务（这里通过参数可以设置事务的级别）
-            Session session = connection.createSession(true, Session.SESSION_TRANSACTED);
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
             InetAddress addr = InetAddress.getLocalHost();
             localIp = addr.getHostAddress(); //获取本机ip

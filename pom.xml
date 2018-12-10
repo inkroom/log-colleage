@@ -9,10 +9,10 @@
     <version>1.0-SNAPSHOT</version>
 
 
-    <properties>
+    <propertiesField>
         <spring.version>5.1.2.RELEASE</spring.version>
         <spring.group>org.springframework</spring.group>
-    </properties>
+    </propertiesField>
 
     <modules>
         <module>client</module>
@@ -24,6 +24,15 @@
     </modules>
 
     <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
 
         <dependency>
             <groupId>cn.inkroom.log</groupId>

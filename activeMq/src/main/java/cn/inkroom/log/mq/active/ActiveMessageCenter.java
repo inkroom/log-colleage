@@ -18,11 +18,7 @@ public class ActiveMessageCenter implements MessageCenter {
 
     private Session session;
 
-    public Session getSession() {
-        return session;
-    }
-
-    public void setSession(Session session) {
+    public ActiveMessageCenter(Session session) {
         this.session = session;
     }
 
@@ -39,15 +35,12 @@ public class ActiveMessageCenter implements MessageCenter {
             }
             consumer = session.createConsumer(destination);
 
-            if (listener instanceof ActiveMessageListener) {
-                ActiveMessageListener activeMessageListener = (ActiveMessageListener) listener;
+//            if (listener instanceof ActiveMessageListener) {
+            ActiveMessageListener activeMessageListener = new ActiveMessageListener(listener, consumer, channel);
 
-                activeMessageListener.setConsumer(consumer);
-                activeMessageListener.setChannel(channel);
+            new Thread(activeMessageListener).start();
 
-                new Thread(activeMessageListener).start();
-
-            }
+//            }
         } catch (JMSException e) {
             logger.warn(e.getMessage());
         }
