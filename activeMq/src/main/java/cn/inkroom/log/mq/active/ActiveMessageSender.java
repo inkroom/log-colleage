@@ -5,12 +5,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
+import java.io.Closeable;
+import java.io.IOException;
 
 /**
  * @author 墨盒
  * @Date 18-11-5
  */
-public class ActiveMessageSender implements MessageSender {
+public class ActiveMessageSender implements MessageSender, Closeable {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -46,11 +48,20 @@ public class ActiveMessageSender implements MessageSender {
                 local.set(producer);
             }
             producer.send(session.createTextMessage(message));
-            session.commit();
+//            session.commit();
         } catch (JMSException e) {
             logger.warn(e.getMessage());
         }
 
         return true;
+    }
+
+    @Override
+    public void close() throws IOException {
+        try {
+            session.close();
+        } catch (JMSException e) {
+            throw new IOException(e);
+        }
     }
 }
