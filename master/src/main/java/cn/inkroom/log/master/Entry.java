@@ -30,16 +30,24 @@ public class Entry {
 
             String type = properties.getProperty("mq.type");
 
+            //读取消息中间件相关配置
             Object mqConfig = null;
 
             switch (type) {
                 case "activeMq":
-
-                    ActiveMqBean bean = (ActiveMqBean) PropertiesUtil.mapping(properties, "mq", ActiveMqBean.class);
-
-                    mqConfig = bean;
+                    mqConfig = PropertiesUtil.mapping(properties, "mq", ActiveMqBean.class);
                     break;
             }
+
+
+            //获取监听端口
+
+            int port = Integer.parseInt(properties.getProperty("socket.port"));
+
+            //开启监听
+
+
+
 
 
         } catch (IOException e) {
