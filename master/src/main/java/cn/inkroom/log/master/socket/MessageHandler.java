@@ -7,6 +7,8 @@ import io.netty.util.ReferenceCountUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+
 /**
  * @author 墨盒
  * @Date 18-12-10
@@ -14,6 +16,8 @@ import org.slf4j.LoggerFactory;
 public class MessageHandler extends ChannelInboundHandlerAdapter {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
+
+
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -34,4 +38,20 @@ public class MessageHandler extends ChannelInboundHandlerAdapter {
         ctx.close();
         logger.error(cause.getMessage(), cause);
     }
+
+    @Override
+    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+        super.channelRegistered(ctx);
+
+        logger.debug(" public void channelRegistered(ChannelHandlerContext ctx) throws Exception {");
+
+    }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        super.channelActive(ctx);
+        logger.debug("public void channelActive(ChannelHandlerContext ctx) throws Exception");
+
+    }
+
 }
