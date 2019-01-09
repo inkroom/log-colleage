@@ -2,8 +2,6 @@ package cn.inkroom.log.model;
 
 
 import com.alibaba.fastjson.JSON;
-import jdk.nashorn.internal.ir.debug.JSONWriter;
-import jdk.nashorn.internal.parser.JSONParser;
 
 import java.util.Date;
 
@@ -29,6 +27,13 @@ public class LogMsg {
 //                ", tag='" + tag + '\'' +
 //                ", msg='" + msg + '\'' +
 //                '}';
+    }
+
+    public static LogMsg getInstanceFromJson(String value) throws Exception {
+        return JSON.parseObject(value, LogMsg.class);
+    }
+
+    public LogMsg() {
     }
 
     public String getMsg() {

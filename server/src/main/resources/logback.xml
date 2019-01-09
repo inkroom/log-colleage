@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true">
-    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
-    <property name="LOG_NAME" value="/home/inkbox/log"/>
     <!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名,,,, -->
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <!--<pattern>%d %p (%file:%line\)- %m%n</pattern>-->
-            <!--格式化输出：%d:表示日期    %thread:表示线程名     %-5level:级别从左显示5个字符宽度  %msg:日志消息    %n:是换行符-->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss}-学校前台-[%thread] %-5level %logger - %msg%n</pattern>
-            <charset>UTF8</charset>
-        </encoder>
-    </appender>
+    <!--<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">-->
+        <!--<encoder>-->
+            <!--&lt;!&ndash;<pattern>%d %p (%file:%line\)- %m%n</pattern>&ndash;&gt;-->
+            <!--&lt;!&ndash;格式化输出：%d:表示日期    %thread:表示线程名     %-5level:级别从左显示5个字符宽度  %msg:日志消息    %n:是换行符&ndash;&gt;-->
+            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss}-server-[%thread] %-5level %logger - %msg%n</pattern>-->
+            <!--<charset>UTF8</charset>-->
+        <!--</encoder>-->
+    <!--</appender>-->
     <!--<include resource="org/springframework/boot/logging/logback/base.xml"/>-->
     <contextName>RestAPI</contextName>
     <!--<property name="LOG_PATH" value="/usr/diy/project/log/java/school"/>-->
@@ -208,7 +206,7 @@
     <!--</appender>-->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}前台 %-5level %logger Line:%-3L - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} server %-5level %logger Line:%-3L - %msg%n</pattern>
             <!--<charset>GBK</charset>-->
         </encoder>
     </appender>
