@@ -9,10 +9,10 @@
     <version>1.0-SNAPSHOT</version>
 
 
-    <propertiesField>
+    <properties>
         <spring.version>5.1.2.RELEASE</spring.version>
         <spring.group>org.springframework</spring.group>
-    </propertiesField>
+    </properties>
 
     <modules>
         <module>client</module>

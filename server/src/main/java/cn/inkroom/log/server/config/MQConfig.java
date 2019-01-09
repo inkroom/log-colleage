@@ -39,7 +39,7 @@ public class MQConfig {
                 //开启链接
                 connection.start();
                 //创建一个事务（这里通过参数可以设置事务的级别）
-                Session session = connection.createSession(true, Session.SESSION_TRANSACTED);
+                Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
                 return new ActiveMessageCenter(session);
         }
         throw new IllegalArgumentException("非法的类型,mq.type=" + type);

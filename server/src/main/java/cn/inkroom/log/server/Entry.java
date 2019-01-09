@@ -21,34 +21,34 @@ public class Entry {
     public static void main(String[] args) {
 
 
-        Socket socket = new Socket();
-        socket.setHost("127.0.0.1");
-        socket.setPort(8089);
+//        Socket socket = new Socket();
+//        socket.setHost("127.0.0.1");
+//        socket.setPort(8089);
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    SocketConnector connector = new SocketConnector(socket);
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
+//
+//        synchronized (SocketHandler.class) {
+//            while (SocketHandler.channel != null) {//等待连接完成
+//                byte[] data = "第二条消息".getBytes();
+//                ByteBuf buf = Unpooled.buffer();
+//                buf.writeBytes(data);
+//                SocketHandler.channel.write(buf);
+//                SocketHandler.channel.flush();
+//            }
+//
+//        }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    SocketConnector connector = new SocketConnector(socket);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
-        synchronized (SocketHandler.class) {
-            while (SocketHandler.channel != null) {//等待连接完成
-                byte[] data = "第二条消息".getBytes();
-                ByteBuf buf = Unpooled.buffer();
-                buf.writeBytes(data);
-                SocketHandler.channel.write(buf);
-                SocketHandler.channel.flush();
-            }
-
-        }
-
-
-//        ApplicationContext ac = new ClassPathXmlApplicationContext("classpath:application.xml");
+        ApplicationContext ac = new ClassPathXmlApplicationContext("classpath:application.xml");
     }
 }

@@ -22,6 +22,16 @@
 
     <dependencies>
 
+
+
+        <!-- https://mvnrepository.com/artifact/org.influxdb/influxdb-java -->
+        <dependency>
+            <groupId>org.influxdb</groupId>
+            <artifactId>influxdb-java</artifactId>
+            <version>2.14</version>
+        </dependency>
+
+
         <dependency>
             <groupId>cn.inkroom.log</groupId>
             <artifactId>model</artifactId>
@@ -71,7 +81,12 @@
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>${spring.group}</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>${spring.group}</groupId>
             <artifactId>spring-core</artifactId>
@@ -87,6 +102,13 @@
             <artifactId>spring-aop</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.9.2</version>
+        </dependency>
+
 
     </dependencies>
 </project>
