@@ -1,3 +1,5 @@
+package dao;
+
 import cn.inkroom.log.model.LogMsg;
 import cn.inkroom.log.server.dao.LogDao;
 import org.junit.Test;
