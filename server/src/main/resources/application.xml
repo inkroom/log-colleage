@@ -30,4 +30,36 @@
         <constructor-arg name="password" value=""/>
     </bean>
 
+
+    <!--定时任务配置-->
+    <bean id="jobFactory" class="cn.inkroom.log.server.quartz.AutoSpringBeanJobFactory"/>
+
+    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobFactory" ref="jobFactory"/>
+        <!--<property name="dataSource" ref="dataSource"/>-->
+        <!--<property name="jobDetails">-->
+        <!--<list>-->
+        <!--<ref bean="simpleJobDetail"/>-->
+        <!--<ref bean="firstJobDetail"/>-->
+        <!--</list>-->
+        <!--</property>-->
+        <!--<property name="triggers">-->
+        <!--<list>-->
+        <!--<ref bean="simpleTrigger"/>-->
+        <!--<ref bean="cronTrigger"/>-->
+        <!--</list>-->
+        <!--</property>-->
+    </bean>
+
+    <!--<bean id="schedulerFactory" class="org.quartz.impl.StdSchedulerFactory"/>-->
+    <!--<bean id="scheduler" class="org.quartz.impl.StdScheduler" factory-bean="schedulerFactory" factory-method="getScheduler">-->
+    <!--<property name="jobFactory" ref="jobFactory"/>-->
+    <!--</bean>-->
+
+    <bean class="cn.inkroom.log.server.quartz.SchedulerManager">
+        <!--<property name="schedulerFactoryBean" ref="schedulerFactoryBean" />-->
+    </bean>
+    <bean id="s" class="java.lang.String">
+        <constructor-arg index="0" value="132456来自配置文件"/>
+    </bean>
 </beans>
