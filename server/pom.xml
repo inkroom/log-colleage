@@ -62,11 +62,11 @@
             <version>4.1.31.Final</version>
         </dependency>
 
-        <dependency>
-            <groupId>cn.inkroom.log</groupId>
-            <artifactId>mq-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>cn.inkroom.log</groupId>-->
+            <!--<artifactId>mq-api</artifactId>-->
+            <!--<version>1.0-SNAPSHOT</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>cn.inkroom.log</groupId>
@@ -75,27 +75,27 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
-        <dependency>
-            <groupId>${spring.group}</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>${spring.group}</groupId>-->
+            <!--<artifactId>spring-context</artifactId>-->
+            <!--<version>${spring.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>${spring.group}</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>${spring.group}</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${spring.group}</groupId>
-            <artifactId>spring-beans</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>${spring.group}</groupId>-->
+            <!--<artifactId>spring-core</artifactId>-->
+            <!--<version>${spring.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>${spring.group}</groupId>-->
+            <!--<artifactId>spring-beans</artifactId>-->
+            <!--<version>${spring.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>${spring.group}</groupId>
             <artifactId>spring-aop</artifactId>

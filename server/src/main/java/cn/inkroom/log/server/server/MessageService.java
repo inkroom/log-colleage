@@ -23,7 +23,7 @@ public class MessageService implements MessageListener {
     private LogDao dao;
 
     @Override
-    public void onMessage(String message, String channel) {
+    public boolean onMessage(String message, String channel) {
 
         logger.debug("接受到消息={}", message);
 
@@ -32,13 +32,18 @@ public class MessageService implements MessageListener {
             LogMsg msg = LogMsg.getInstanceFromJson(message);
             logger.debug("转换之后的json={}", msg);
             //执行入库操作
-            dao.insert(msg);
+            if (dao.insert(msg) != 1) {
+                logger.error("日志入库失败");
+                return false;
+            }
 
         } catch (Exception e) {
             logger.warn("错误的json数据={}，不能转换成{}", message, LogMsg.class);
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
+//            e.printStackTrace();
+            return false;
         }
-
+        return true;
 
     }
 }
