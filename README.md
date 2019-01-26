@@ -1,5 +1,8 @@
 # log-colleage
+
 初始化构建模块
+
+----
 
 共分为以下模块
 - client 
@@ -11,7 +14,18 @@
 - web
     > 负责呈现master管理功能，提供日志文件查询、下载功能；短时间内的日志实时查看
 
+---- 
 
+## features
+- [ ] server端处理无法入库
+- [ ] master server全面使用mq通信
+
+---- 
+
+## bugs
+- [ ] influxdb 保留策略有问题
+
+----
 
 使用到的服务
 
