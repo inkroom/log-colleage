@@ -40,7 +40,9 @@ public class ActiveMessageListener implements Runnable {
                 Message message = consumer.receive();
                 if (message instanceof TextMessage) {
                     TextMessage textMessage = (TextMessage) message;
-                    listener.onMessage(textMessage.getText(), this.channel);
+                    if(listener.onMessage(textMessage.getText(), this.channel)){
+                        message.acknowledge();
+                    }
                 }
             } catch (JMSException e) {
                 logger.warn(e.getMessage());
