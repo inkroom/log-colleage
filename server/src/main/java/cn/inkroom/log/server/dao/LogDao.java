@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @author 墨盒
- * @Date 19-1-8
+ * @date 19-1-8
  */
 public interface LogDao {
 

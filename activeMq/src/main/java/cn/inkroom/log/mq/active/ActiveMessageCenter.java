@@ -9,7 +9,7 @@ import javax.jms.*;
 
 /**
  * @author 墨盒
- * @Date 18-11-5
+ * @date 18-11-5
  */
 public class ActiveMessageCenter implements MessageCenter {
 

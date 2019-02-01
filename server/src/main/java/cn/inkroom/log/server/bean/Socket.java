@@ -4,7 +4,7 @@ import cn.inkroom.log.util.PropertiesField;
 
 /**
  * @author 墨盒
- * @Date 18-12-11
+ * @date 18-12-11
  */
 public class Socket {
 

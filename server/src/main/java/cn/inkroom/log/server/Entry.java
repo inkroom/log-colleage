@@ -12,7 +12,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * @author 墨盒
- * @Date 18-11-20
+ * @date 18-11-20
  */
 public class Entry {
 

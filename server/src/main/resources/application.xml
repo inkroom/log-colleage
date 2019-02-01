@@ -8,8 +8,8 @@
     <context:component-scan base-package="cn.inkroom.log.server.config"/>
     <context:component-scan base-package="cn.inkroom.log.server.server"/>
     <context:component-scan base-package="cn.inkroom.log.server.dao"/>
-
-
+    <context:component-scan base-package="cn.inkroom.log.server.quartz">
+    </context:component-scan>
 
 
     <aop:config>
@@ -17,9 +17,13 @@
     </aop:config>
 
 
-
     <bean class="cn.inkroom.log.server.handler.PropertiesHandler">
-        <property name="locations" value="classpath:mq.properties"/>
+        <property name="locations" >
+            <list >
+                <value>classpath:mq.properties</value>
+                <value>classpath:quartz.properties</value>
+            </list>
+        </property>
     </bean>
 
     <bean class="cn.inkroom.log.server.handler.DbConnectFactory">
@@ -32,34 +36,31 @@
 
 
     <!--定时任务配置-->
-    <bean id="jobFactory" class="cn.inkroom.log.server.quartz.AutoSpringBeanJobFactory"/>
+    <!--<bean id="jobFactory" class="cn.inkroom.log.server.quartz.AutoSpringBeanJobFactory"/>-->
 
-    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="jobFactory" ref="jobFactory"/>
-        <!--<property name="dataSource" ref="dataSource"/>-->
-        <!--<property name="jobDetails">-->
-        <!--<list>-->
-        <!--<ref bean="simpleJobDetail"/>-->
-        <!--<ref bean="firstJobDetail"/>-->
-        <!--</list>-->
-        <!--</property>-->
-        <!--<property name="triggers">-->
-        <!--<list>-->
-        <!--<ref bean="simpleTrigger"/>-->
-        <!--<ref bean="cronTrigger"/>-->
-        <!--</list>-->
-        <!--</property>-->
-    </bean>
-
-    <!--<bean id="schedulerFactory" class="org.quartz.impl.StdSchedulerFactory"/>-->
-    <!--<bean id="scheduler" class="org.quartz.impl.StdScheduler" factory-bean="schedulerFactory" factory-method="getScheduler">-->
-    <!--<property name="jobFactory" ref="jobFactory"/>-->
+    <!--<bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">-->
+        <!--<property name="jobFactory" ref="jobFactory"/>-->
+        <!--&lt;!&ndash;<property name="dataSource" ref="dataSource"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="jobDetails">&ndash;&gt;-->
+        <!--&lt;!&ndash;<list>&ndash;&gt;-->
+        <!--&lt;!&ndash;<ref bean="simpleJobDetail"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<ref bean="firstJobDetail"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;</list>&ndash;&gt;-->
+        <!--&lt;!&ndash;</property>&ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="triggers">&ndash;&gt;-->
+        <!--&lt;!&ndash;<list>&ndash;&gt;-->
+        <!--&lt;!&ndash;<ref bean="simpleTrigger"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<ref bean="cronTrigger"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;</list>&ndash;&gt;-->
+        <!--&lt;!&ndash;</property>&ndash;&gt;-->
     <!--</bean>-->
 
-    <bean class="cn.inkroom.log.server.quartz.SchedulerManager">
-        <!--<property name="schedulerFactoryBean" ref="schedulerFactoryBean" />-->
-    </bean>
-    <bean id="s" class="java.lang.String">
-        <constructor-arg index="0" value="132456来自配置文件"/>
-    </bean>
+    <!--&lt;!&ndash;<bean id="schedulerFactory" class="org.quartz.impl.StdSchedulerFactory"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<bean id="scheduler" class="org.quartz.impl.StdScheduler" factory-bean="schedulerFactory" factory-method="getScheduler">&ndash;&gt;-->
+    <!--&lt;!&ndash;<property name="jobFactory" ref="jobFactory"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</bean>&ndash;&gt;-->
+
+    <!--<bean class="cn.inkroom.log.server.quartz.SchedulerManager">-->
+        <!--<property name="schedulerFactoryBean" ref="schedulerFactoryBean"/>-->
+    <!--</bean>-->
 </beans>

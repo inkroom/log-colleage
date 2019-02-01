@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author 墨盒
- * @Date 18-11-20
+ * @date 18-11-20
  */
 public class MasterConfig {
 

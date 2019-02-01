@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author 墨盒
- * @Date 19-1-8
+ * @date 19-1-8
  */
 public class DbConnectFactory {
 

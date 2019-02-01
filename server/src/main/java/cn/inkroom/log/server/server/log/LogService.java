@@ -1,11 +1,13 @@
-package cn.inkroom.log.server.server;
+package cn.inkroom.log.server.server.log;
 
 import cn.inkroom.log.model.LogMsg;
 import cn.inkroom.log.server.dao.LogDao;
 import cn.inkroom.log.server.handler.LogFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedWriter;
@@ -16,7 +18,7 @@ import java.util.List;
  * 日志的备份等服务
  *
  * @author 墨盒
- * @Date 19-1-11
+ * @date 19-1-11
  */
 
 @Service
@@ -29,7 +31,7 @@ public class LogService {
 
     private LogFormat format = new LogFormat();//格式
 
-    @Autowired
+    @Autowired(required = false)
     public void setFormat(LogFormat format) {
         this.format = format;
     }

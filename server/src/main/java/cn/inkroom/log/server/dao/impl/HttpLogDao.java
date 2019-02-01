@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * 基于influxdb的http接口实现
  *
  * @author 墨盒
- * @Date 19-1-8
+ * @date 19-1-8
  */
 public class HttpLogDao  {
 

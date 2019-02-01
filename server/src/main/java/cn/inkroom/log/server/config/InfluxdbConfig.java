@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * influxdb数据库配置信息
  * @author 墨盒
- * @Date 18-11-20
+ * @date 18-11-20
  */
 public class InfluxdbConfig {
 

@@ -9,7 +9,7 @@ import java.util.Date;
  * 日志消息
  *
  * @author 墨盒
- * @Date 18-11-20
+ * @date 18-11-20
  */
 public class LogMsg {
 
