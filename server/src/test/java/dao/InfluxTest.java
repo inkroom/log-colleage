@@ -16,7 +16,7 @@ import java.util.Date;
  * 测试influx连接是
  *
  * @author 墨盒
- * @Date 19-1-8
+ * @date 19-1-8
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath*:application.xml"})

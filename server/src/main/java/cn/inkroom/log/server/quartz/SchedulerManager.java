@@ -4,9 +4,12 @@ import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -16,25 +19,35 @@ import java.util.Map;
 
 /**
  * @author 墨盒
- * @Date 19-1-11
+ * @date 19-1-11
  */
+@Component
 public class SchedulerManager {
 
     private Logger log = LoggerFactory.getLogger(getClass());
     private Scheduler scheduler;
-    @Autowired
+    //    @Autowired
     private SchedulerFactoryBean schedulerFactoryBean;
-
 
     private ArrayList<Map<String, String>> keys;
 
     private static final String KEY_NAME = "name";
     private static final String KEY_GROUP = "group";
 
-    public void setSchedulerFactoryBean(SchedulerFactoryBean schedulerFactoryBean) {
-        this.schedulerFactoryBean = schedulerFactoryBean;
+    @Autowired
+    public SchedulerManager(AutoSpringBeanJobFactory beanJobFactory) {
+        SchedulerFactoryBean bean = new SchedulerFactoryBean();
+        bean.setJobFactory(beanJobFactory);
+        bean.setAutoStartup(true);
+        try {
+            bean.afterPropertiesSet();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.schedulerFactoryBean = bean;
         scheduler = schedulerFactoryBean.getScheduler();
         keys = new ArrayList<>();
+        log.debug("构造定时任务管理器");
     }
 
 
@@ -68,9 +81,10 @@ public class SchedulerManager {
         try {
 //            cronTriggerFactoryBean.afterPropertiesSet();
 
-            scheduler.scheduleJob(createJobDetail(name, group, c), createCronTrigger(name, group, cron));
+            log.debug("下次执行时间={}", scheduler.scheduleJob(createJobDetail(name, group, c), createCronTrigger(name, group, cron)));
+            scheduler.start();
             log.info("添加任务 name = " + name + "  group = " + group + "  class = " + c.getName());
-
+//scheduler.get
             addKeys(name, group);
         } catch (Exception e) {
             e.printStackTrace();

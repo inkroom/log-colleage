@@ -15,7 +15,7 @@ import java.util.*;
 
 /**
  * @author 墨盒
- * @Date 19-1-8
+ * @date 19-1-8
  */
 @Repository
 public class JdbcLogDao implements LogDao {

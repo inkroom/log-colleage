@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  *
  * 注入注解
  * @author 墨盒
- * @Date 18-12-10
+ * @date 18-12-10
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})

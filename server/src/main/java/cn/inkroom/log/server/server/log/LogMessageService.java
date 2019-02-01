@@ -1,8 +1,10 @@
-package cn.inkroom.log.server.server;
+package cn.inkroom.log.server.server.log;
 
 import cn.inkroom.log.model.LogMsg;
+import cn.inkroom.log.mq.MessageCenter;
 import cn.inkroom.log.mq.MessageListener;
 import cn.inkroom.log.server.dao.LogDao;
+import cn.inkroom.log.server.handler.PropertiesHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +14,21 @@ import org.springframework.stereotype.Service;
  * 负责接收日志消息
  *
  * @author 墨盒
- * @Date 18-12-10
+ * @date 18-12-10
  */
 @Service
-public class MessageService implements MessageListener {
+public class LogMessageService implements MessageListener {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private LogDao dao;
+
+    @Autowired
+    public LogMessageService(MessageCenter center) {
+        logger.info("注册消息中间件监听，channel={}，类型=queues", PropertiesHandler.getProperty("mq.channel.log"));
+        center.addListener(this, PropertiesHandler.getProperty("mq.channel.log"), false);
+    }
 
     @Override
     public boolean onMessage(String message, String channel) {

@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * 日志消息格式化成单行文本
  *
  * @author 墨盒
- * @Date 19-1-11
+ * @date 19-1-11
  */
 public class LogFormat {
 
@@ -40,7 +40,6 @@ public class LogFormat {
     public LogFormat() {
 
         format = "{t} {tag} {i} : {m}";
-
 
         pattern = Pattern.compile("\\{([^\\}]+)\\}");
     }
@@ -81,8 +80,6 @@ public class LogFormat {
                     break;
             }
             i++;
-
-
         }
         return String.format(format.replaceAll("\\{[^\\}]+\\}", "%s"), list.toArray());
 //        return null;

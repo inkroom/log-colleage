@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * 测试mq监听
  *
  * @author 墨盒
- * @Date 18-12-10
+ * @date 18-12-10
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath*:application.xml"})

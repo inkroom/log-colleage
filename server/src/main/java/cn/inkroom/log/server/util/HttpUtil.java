@@ -15,7 +15,7 @@ import java.util.Map;
  * http工具类，用于发送http请求
  *
  * @author 墨盒
- * @Date 19-1-8
+ * @date 19-1-8
  */
 public class HttpUtil {
 
