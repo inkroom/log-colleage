@@ -60,7 +60,21 @@
             <groupId>${spring.group}</groupId>
             <artifactId>spring-core</artifactId>
             <version>${spring.version}</version>
+            <!--因为使用了sl4j，所以去掉commons-logging-->
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        <!--处理spring日志兼容slf4j-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
         <dependency>
             <groupId>${spring.group}</groupId>

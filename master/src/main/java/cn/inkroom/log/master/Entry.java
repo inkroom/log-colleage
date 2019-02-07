@@ -11,7 +11,7 @@ import java.util.Properties;
 
 /**
  * @author 墨盒
- * @Date 18-12-10
+ * @date 18-12-10
  */
 public class Entry {
 
