@@ -5,6 +5,12 @@ import cn.inkroom.log.server.socket.SocketConnector;
 import cn.inkroom.log.server.socket.SocketHandler;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.vertx.core.AsyncResult;
+import io.vertx.core.Handler;
+import io.vertx.core.Vertx;
+import io.vertx.core.buffer.Buffer;
+import io.vertx.core.net.NetServer;
+import io.vertx.core.net.NetSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -48,7 +54,20 @@ public class Entry {
 //
 //        }
 
-
+//        Vertx vertx = Vertx.vertx();
+//
+//       NetServer server= vertx.createNetServer();
+//
+//        server.connectHandler(socket -> {
+//
+//            socket.handler(buffer -> {
+//                //获取对于的文件名
+//                System.out.println("收到的消息-"+buffer.toString());
+//                socket.sendFile("/media/inkbox/study/娱乐/图片/GOSICK/GOSICK09.jpg");
+//                socket.end();
+//            });
+//
+//        }).listen(9876, netServerAsyncResult -> System.out.println("监听启动"));
         ApplicationContext ac = new ClassPathXmlApplicationContext("classpath:application.xml");
     }
 }

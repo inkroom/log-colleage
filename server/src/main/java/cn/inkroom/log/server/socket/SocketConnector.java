@@ -31,9 +31,9 @@ public class SocketConnector {
             b.group(group).channel(NioSocketChannel.class).option(ChannelOption.TCP_NODELAY, true).handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(
-                            // new LoggingHandler(LogLevel.INFO),
-                            new SocketHandler());
+//                    ch.pipeline().addLast(
+//                            // new LoggingHandler(LogLevel.INFO),
+//                            new SocketHandler());
                 }
             });
 

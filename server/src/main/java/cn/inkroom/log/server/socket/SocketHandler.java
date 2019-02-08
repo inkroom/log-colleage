@@ -7,6 +7,11 @@ import io.netty.buffer.UnpooledDirectByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.vertx.core.Handler;
+import io.vertx.core.Vertx;
+import io.vertx.core.buffer.Buffer;
+import io.vertx.core.net.NetServer;
+import io.vertx.core.net.NetSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,11 +19,30 @@ import org.slf4j.LoggerFactory;
  * @author 墨盒
  * @date 18-12-11
  */
-public class SocketHandler extends ChannelInboundHandlerAdapter {
+public class SocketHandler extends ChannelInboundHandlerAdapter implements Handler<Buffer> {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     public static Channel channel;
+
+    private NetSocket socket;
+
+
+    public SocketHandler(int port) {
+
+        logger.debug("监听socket端口={}", port);
+
+        Vertx vertx = Vertx.vertx();
+        NetServer server = vertx.createNetServer();
+        server.connectHandler(new Handler<NetSocket>() {
+            @Override
+            public void handle(NetSocket socket) {
+                SocketHandler.this.socket = socket;
+                socket.handler(SocketHandler.this);
+            }
+        }).listen(port);
+    }
+
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -55,4 +79,13 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
     }
 
 
+    @Override
+    public void handle(Buffer buffer) {
+
+        String filename = buffer.toString();
+        logger.debug("文件名={}", buffer.toString());
+
+        socket.sendFile(filename);
+
+    }
 }

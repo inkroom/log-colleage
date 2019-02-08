@@ -1,4 +1,4 @@
-package cn.inkroom.log.server.quartz;
+package cn.inkroom.log.quartz;
 
 import org.quartz.spi.TriggerFiredBundle;
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @Descorption
  */
 @Component
-public class AutoSpringBeanJobFactory extends SpringBeanJobFactory {
+public class AutowireSpringBeanJobFactory extends SpringBeanJobFactory {
 
     private Logger log = LoggerFactory.getLogger(getClass());
     @Autowired

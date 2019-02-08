@@ -1,17 +1,19 @@
 package cn.inkroom.log.server.server.log;
 
+import cn.inkroom.log.model.LogBackup;
 import cn.inkroom.log.model.LogMsg;
 import cn.inkroom.log.server.dao.LogDao;
+import cn.inkroom.log.server.dao.h2.BackupDao;
 import cn.inkroom.log.server.handler.LogFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,7 +24,6 @@ import java.util.List;
  */
 
 @Service
-
 public class LogService {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -50,11 +51,12 @@ public class LogService {
 
         // TODO: 19-1-11 暂时先用bio，后期再改成nio
 
-//读取数据
+        //读取数据
         List<LogMsg> msgs = dao.selectByTime(start, end);
 
+        File file = new File(path);
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (LogMsg msg : msgs) {
                 writer.write(format.format(msg));
                 writer.newLine();

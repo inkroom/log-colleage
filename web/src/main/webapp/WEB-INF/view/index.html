@@ -9,13 +9,60 @@
 <head>
     <title>首页</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+        /**{*/
+        /*margin: 0;*/
+        /*padding: 0;*/
+        /*}*/
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: aquamarine;
+        }
+
+        .header .el-col {
+            cursor: pointer;
+            background-color: aquamarine;
+            text-align: center;
+        }
+
+        .header .el-col:hover {
+            background-color: #41ff60;
+        }
+        .header .active{
+            background-color: beige;
+        }
+    </style>
 </head>
-
 <body>
-
-<p>首页内确定容</p>
-
+<div id="container">
+    <el-row class="header">
+        <el-col :span="3" :offset="8">
+            <p>server状态</p>
+        </el-col>
+        <el-col :span="3">
+            <p>日志文件</p>
+        </el-col>
+        <el-col :span="3">
+            <p>实时日志</p>
+        </el-col>
+    </el-row>
+</div>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script type="text/javascript">
+    new Vue({
+        el: '#container',
+        data: {}
+    })
+</script>
 </body>
-
 </html>
     
