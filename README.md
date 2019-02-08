@@ -19,6 +19,7 @@
 ## features
 - [ ] server端处理无法入库
 - [ ] master server全面使用mq通信
+- [ ] 运行引入自定义jar，替换原本的mq方案
 
 ---- 
 
@@ -27,10 +28,29 @@
 
 ----
 
-使用到的服务
+## 使用到的服务
 
 
 | 服务 | 功能 | 配置文件所在 |备注|
 |:-----|:----|:--|:----|
 |activeMq|传输日志| 待定 | 日志使用quene方式， |
 | influxDb时序数据库 |待定 | 用于存储日志 |
+
+
+## 框架
+
+### 后端
+
+- spring
+- springMVC
+- activeMq
+- quartz
+- vert.x-core
+- slf4j
+- logback
+- log4j
+
+### 前段（仅web模块）
+
+- elementUI
+- vue

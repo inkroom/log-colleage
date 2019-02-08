@@ -35,4 +35,50 @@
         <property name="templateEngine" ref="templateEngine"/>
         <property name="characterEncoding" value="UTF-8"/>
     </bean>
+
+    <!--数据连接池-->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:tcp://localhost/~/log_web"/>
+        <!--<property name="username" value="${jdbc.username}"/>-->
+        <!--<property name="password" value="${jdbc.password}"/>-->
+        <property name="minIdle" value="5"/>
+    </bean>
+
+    <!-- 配置mybatis的sqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 自动扫描mappers.xml文件 -->
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:mapper/*.xml</value>
+            </list>
+        </property>
+        <!-- mybatis配置文件 -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!-- pagehelper 配置 -->
+        <!--<property name="plugins">-->
+        <!--<array>-->
+        <!--<beans class="com.github.pagehelper.PageInterceptor">-->
+        <!--&lt;!&ndash; 这里的几个配置主要演示如何使用，如果不理解，一定要去掉下面的配置 &ndash;&gt;-->
+        <!--<property name="properties">-->
+        <!--<value>-->
+        <!--&lt;!&ndash;  helperDialect=mysql-->
+        <!--reasonable=true-->
+        <!--supportMethodsArguments=true-->
+        <!--params=count=countSql-->
+        <!--autoRuntimeDialect=true &ndash;&gt;-->
+        <!--</value>-->
+        <!--</property>-->
+        <!--</beans>-->
+        <!--</array>-->
+        <!--</property>-->
+        <!--<property name="typeAliasesPackage" value="com.nsu.beans"/>-->
+    </bean>
+
+    <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.inkroom.log.web.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
 </beans>

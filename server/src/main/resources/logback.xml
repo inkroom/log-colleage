@@ -258,9 +258,9 @@
 
     <!--<springProfile name="proc">-->
     <root level="DEBUG">
-        <appender-ref ref="FILEERROR"/>
-        <appender-ref ref="FILEWARN"/>
-        <appender-ref ref="FILEINFO"/>
+        <!--<appender-ref ref="FILEERROR"/>-->
+        <!--<appender-ref ref="FILEWARN"/>-->
+        <!--<appender-ref ref="FILEINFO"/>-->
         <appender-ref ref="CONSOLE"/>
         <!--<appender-ref ref="SQL"/>-->
     </root>

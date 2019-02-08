@@ -27,6 +27,8 @@ public class HeartBeatJob extends QuartzJobBean {
     private MessageSender sender;
     @Value("${mq.channel.heartbeat}")
     private String heartBeatChannel;
+    @Value("${socket.port}")
+    private int port;
 //    @Autowired
 //    public HeartBeatJob(SchedulerManager manager) {
 //        logger.info("");
@@ -38,11 +40,11 @@ public class HeartBeatJob extends QuartzJobBean {
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-
         //发送心跳包
         try {
             JSONObject object = new JSONObject();
             object.put("ip", InetAddress.getLocalHost().getHostAddress());
+            object.put("port", port);
             logger.debug("发送心跳包={}", object.toJSONString());
             sender.send(object.toJSONString(), heartBeatChannel, true);
         } catch (UnknownHostException e) {

@@ -9,11 +9,11 @@
     <version>1.0-SNAPSHOT</version>
     <description>消息中间件通信接口，</description>
 
-    <parent>
-        <groupId>cn.inkroom.log</groupId>
-        <artifactId>parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath/>
-    </parent>
+    <!--<parent>-->
+        <!--<groupId>cn.inkroom.log</groupId>-->
+        <!--<artifactId>parent</artifactId>-->
+        <!--<version>1.0-SNAPSHOT</version>-->
+        <!--&lt;!&ndash;<relativePath/>&ndash;&gt;-->
+    <!--</parent>-->
 
 </project>

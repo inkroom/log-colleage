@@ -1,15 +1,13 @@
-package cn.inkroom.log.server.quartz;
+package cn.inkroom.log.quartz;
 
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -35,7 +33,7 @@ public class SchedulerManager {
     private static final String KEY_GROUP = "group";
 
     @Autowired
-    public SchedulerManager(AutoSpringBeanJobFactory beanJobFactory) {
+    public SchedulerManager(AutowireSpringBeanJobFactory beanJobFactory) {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
         bean.setJobFactory(beanJobFactory);
         bean.setAutoStartup(true);
