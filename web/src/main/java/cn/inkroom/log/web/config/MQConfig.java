@@ -1,40 +1,27 @@
-package cn.inkroom.log.server.config;
+package cn.inkroom.log.web.config;
 
-import cn.inkroom.log.model.Server;
 import cn.inkroom.log.mq.MessageCenter;
 import cn.inkroom.log.mq.MessageFactory;
-import cn.inkroom.log.mq.MessageListener;
 import cn.inkroom.log.mq.MessageSender;
-import cn.inkroom.log.mq.active.ActiveMessageCenter;
-import cn.inkroom.log.server.handler.PropertiesHandler;
-import org.apache.activemq.ActiveMQConnectionFactory;
+import cn.inkroom.log.web.handler.PropertiesHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
-import javax.jms.Connection;
-import javax.jms.Session;
-import java.net.InetAddress;
-import java.util.Calendar;
 import java.util.Properties;
-import java.util.function.BiConsumer;
 
 /**
  * @author 墨盒
- * @date 18-12-10
+ * @date 19-2-9
  */
 @Configuration
 public class MQConfig {
-
     private Logger logger = LoggerFactory.getLogger(getClass());
-
 
     @Bean
     public MessageFactory factory() throws Exception {
         String type = PropertiesHandler.getProperty("mq.class");
-
 //        构造mq属性
         Properties mqProperties = new Properties();
         PropertiesHandler.getProperties().forEach((key, value) -> {
@@ -44,9 +31,10 @@ public class MQConfig {
 
         try {
             Class mqClass = Class.forName(type);
+
             Object factory = mqClass.newInstance();
             if (factory instanceof MessageFactory) {
-                logger.debug("注入MessageFactory class={}",factory.getClass());
+                logger.debug("注入MessageFactory class={}", factory.getClass());
                 ((MessageFactory) factory).init(mqProperties);
                 return ((MessageFactory) factory);
 
@@ -55,7 +43,7 @@ public class MQConfig {
                 throw new IllegalArgumentException("错误的类型，" + type);
             }
 
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             throw new IllegalArgumentException("不存在的类型，" + type);
         }
 
@@ -81,18 +69,6 @@ public class MQConfig {
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
-    }
-    @Bean
-    public Server localServer() throws Exception{
-
-        Server server = new Server();
-        server.setIp(InetAddress.getLocalHost().getHostAddress());
-        server.setStart(System.currentTimeMillis());
-        server.setStatus(true);
-        //TODO 19-2-9 修改文件下载端口注入方式
-        server.setFilePort(9876);
-
-        return server;
     }
 
 }

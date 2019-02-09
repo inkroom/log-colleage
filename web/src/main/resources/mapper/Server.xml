@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.inkroom.log.web.dao.ServerDao">
+
+    <select id="selectServerByIp" resultType="cn.inkroom.log.model.Server">
+        select * from SERVER where ip = #{ip} limit 1;
+    </select>
+
+    <select id="selectServer" resultType="cn.inkroom.log.model.Server">
+        select * from SERVER;
+    </select>
+
+    <update id="updateServer" parameterType="cn.inkroom.log.model.Server">
+        update SERVER set STATUS = #{s.status},RUN = #{s.run},
+        FILE_PORT = #{s.filePort},LAST = #{s.last}
+        where ip = #{s.ip}
+    </update>
+
+    <update id="updateAllServerStop">
+        update SERVER set STATUS=false ;
+    </update>
+
+    <insert id="insertServer" parameterType="cn.inkroom.log.model.Server">
+        insert into SERVER (IP, RUN, STATUS, FILE_PORT, LAST)
+         values (#{s.ip},#{s.run},#{s.status},#{s.filePort},#{s.last});
+    </insert>
+</mapper>

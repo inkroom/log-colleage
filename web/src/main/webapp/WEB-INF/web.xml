@@ -26,16 +26,33 @@
         <filter-name>springUtf8Encoding</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/application.xml</param-value>
+    </context-param>
 
+    <context-param>
+        <param-name>profile</param-name>
+        <param-value>dev</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>cn.inkroom.log.web.listener.WebListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
     <servlet>
         <servlet-name>springMvc</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:/application.xml</param-value>
+            <param-value>classpath:/spring/applicationMVC.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
+
     <!--<servlet-mapping>-->
     <!--<servlet-name>springmvc</servlet-name>-->
     <!--<url-pattern>/index</url-pattern>-->

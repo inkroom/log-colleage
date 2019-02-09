@@ -1,0 +1,33 @@
+<!--
+ created by 墨盒
+ created at 19-2-9
+ -->
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>布局元素</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body>
+<div th:fragment="header">
+    <el-header>
+        <el-col :span="3" :offset="8">
+            <p>server状态</p>
+        </el-col>
+        <el-col :span="3">
+            <p>日志文件</p>
+        </el-col>
+        <el-col :span="3">
+            <p>实时日志</p>
+        </el-col>
+    </el-header>
+</div>
+
+</body>
+
+</html>
+    

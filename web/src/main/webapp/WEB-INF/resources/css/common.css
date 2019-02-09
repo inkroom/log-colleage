@@ -1,0 +1,28 @@
+/**
+ * @author 墨盒
+ * @date 19-2-9
+ */
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: aquamarine;
+}
+
+header .el-col {
+    cursor: pointer;
+    background-color: aquamarine;
+    text-align: center;
+}
+
+header .el-col:hover {
+    background-color: #41ff60;
+}
+
+header .active {
+    background-color: beige;
+    height: 100%;
+}

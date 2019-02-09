@@ -76,6 +76,10 @@ configuration 子节点为 appender、logger、root
         <!--<appender-ref ref="logstash"/>-->
     </root>
 
+    <logger name="org.thymeleaf" level="WARN" />
+    <logger name="o.a.a.t.AbstractInactivityMonitor" level="WARN"/>
+
+
     <!--为某个包单独配置logger
 
     比如定时任务，写代码的包名为：com.seentao.task

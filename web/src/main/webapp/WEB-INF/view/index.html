@@ -11,56 +11,124 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="resources/css/common.css">
     <style>
         /**{*/
         /*margin: 0;*/
         /*padding: 0;*/
         /*}*/
-        html, body {
-            margin: 0;
-            padding: 0;
-        }
 
-        .header {
-            background-color: aquamarine;
-        }
 
-        .header .el-col {
-            cursor: pointer;
-            background-color: aquamarine;
-            text-align: center;
-        }
-
-        .header .el-col:hover {
-            background-color: #41ff60;
-        }
-        .header .active{
-            background-color: beige;
+        .el-row {
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 <div id="container">
-    <el-row class="header">
-        <el-col :span="3" :offset="8">
-            <p>server状态</p>
-        </el-col>
-        <el-col :span="3">
-            <p>日志文件</p>
-        </el-col>
-        <el-col :span="3">
-            <p>实时日志</p>
-        </el-col>
-    </el-row>
+    <el-container>
+        <th:block th:include="common/_layout :: header"/>
+        <el-main>
+            <el-row>
+                <el-col :span="20" :offset="2">
+                    <el-alert
+                            type="success"
+                            :closable="false">
+                        <slot name="title">
+                            共&nbsp;{{ statics.total }}&nbsp;台服务，其中&nbsp;{{ statics.running }}&nbsp;台正常运行，&nbsp;{{ statics.down }}&nbsp;台宕机
+                        </slot>
+                    </el-alert>
+                </el-col>
+            </el-row>
+
+            <el-row v-for=" n in Math.ceil( servers.length / 3)">
+                <el-col :span="6" :offset="index % 3 ==0 ? 2:1"
+                        v-for=" (item,index ) in servers.slice( (n -1) * 3, (n)*3 ) ">
+                    <el-card :body-style="{background:item.status ? '#409EFF' : '#F56C6C'}">
+                        <p>
+                            <span>ip:{{item.ip}}</span>
+                            <span >状态:<span :style="'color: ' + item.status ? '#409EFF' : '#F56C6C'">{{ item.status?'存活':'宕机' }}</span></span>
+                        </p>
+                        <p>
+                            <span>文件下载端口:{{ item.filePort }}</span>
+                        </p>
+                        <p>
+                            <span>上次通讯时间:{{ item.last | formatDate }}</span>
+                        </p>
+                        <p>
+                            <span>运行时长:{{ Math.floor( item.run / 1000 / 3600) }}h</span>
+                        </p>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </el-main>
+        <el-footer></el-footer>
+    </el-container>
+    <!--<el-row class="header">-->
+    <!--<el-col :span="3" :offset="8">-->
+    <!--<p>server状态</p>-->
+    <!--</el-col>-->
+    <!--<el-col :span="3">-->
+    <!--<p>日志文件</p>-->
+    <!--</el-col>-->
+    <!--<el-col :span="3">-->
+    <!--<p>实时日志</p>-->
+    <!--</el-col>-->
+    <!--</el-row>-->
+
+    <!--<el-row class="content">-->
+
+
+    <!--</el-row>-->
 </div>
 <!-- import Vue before Element -->
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <!-- 引入组件库 -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script src="resources/js/common.js"></script>
+
 <script type="text/javascript">
-    new Vue({
+    var vue = new Vue({
         el: '#container',
-        data: {}
+        data: {
+            servers: [],
+            statics: {
+                total: 0,
+                running: 0,
+                down: 0
+            }
+        },
+        mounted() {
+            var _this = this;
+            axios
+                .get('list')
+                .then(function (response) {
+                    console.log(response);
+                    if (response.data.code === 0) {
+                        _this.servers = response.data.data;
+                        _this.statics.total = response.data.data.length;
+                        for (var i = 0; i < response.data.data.length; i++) {
+                            if (response.data.data[i].status)
+                                _this.statics.running += 1;
+                            else
+                                _this.statics.down += 1;
+                        }
+                        console.log(response.data.data);
+                    }
+                })
+
+
+        },
+        filters: {
+            formatDate(time) {
+                var date = new Date(time);
+                console.info(time);
+                console.log(date.getHours())
+                return date.formatDate('yyyy-MM-dd HH:mm'); //此处formatDate是一个函数，将其封装在common/js/date.js里面，便于全局使用
+            }
+        }
     })
 </script>
 </body>

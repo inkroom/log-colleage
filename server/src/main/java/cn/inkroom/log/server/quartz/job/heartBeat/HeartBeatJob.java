@@ -1,5 +1,6 @@
 package cn.inkroom.log.server.quartz.job.heartBeat;
 
+import cn.inkroom.log.model.Server;
 import cn.inkroom.log.mq.MessageSender;
 import com.alibaba.fastjson.JSONObject;
 import org.quartz.JobExecutionContext;
@@ -11,8 +12,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Date;
 
 /**
  * 心跳包定时任务
@@ -29,6 +32,8 @@ public class HeartBeatJob extends QuartzJobBean {
     private String heartBeatChannel;
     @Value("${socket.port}")
     private int port;
+    @Resource(name = "localServer")
+    private Server server;
 //    @Autowired
 //    public HeartBeatJob(SchedulerManager manager) {
 //        logger.info("");
@@ -41,14 +46,18 @@ public class HeartBeatJob extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         //发送心跳包
-        try {
-            JSONObject object = new JSONObject();
-            object.put("ip", InetAddress.getLocalHost().getHostAddress());
-            object.put("port", port);
-            logger.debug("发送心跳包={}", object.toJSONString());
-            sender.send(object.toJSONString(), heartBeatChannel, true);
-        } catch (UnknownHostException e) {
-            logger.warn("无法获取本地ip地址,{}", e);
-        }
+//        try {
+
+        server.setLast(new Date());
+        server.setRun(System.currentTimeMillis() - server.getStart());
+
+//            JSONObject object = new JSONObject();
+//            object.put("ip", InetAddress.getLocalHost().getHostAddress());
+//            object.put("port", port);
+        logger.debug("发送心跳包={}", server.toString());
+        sender.send(server.toString(), heartBeatChannel, true);
+//        } catch (UnknownHostException e) {
+//            logger.warn("无法获取本地ip地址,{}", e);
+//        }
     }
 }
