@@ -19,7 +19,7 @@
     <bean class="cn.inkroom.log.server.handler.PropertiesHandler">
         <property name="locations" >
             <list >
-                <value>classpath:mq.properties</value>
+                <value>classpath:config.properties</value>
                 <!--<value>classpath:quartz.properties</value>-->
                 <!--<value>classpath:socket.properties</value>-->
             </list>
