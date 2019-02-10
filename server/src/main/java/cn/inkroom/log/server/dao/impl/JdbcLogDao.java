@@ -40,7 +40,7 @@ public class JdbcLogDao implements LogDao {
 
         factory.insert("log", tags, fields, msg.getTime().getTime());
 
-        return 0;
+        return 1;
     }
 
     @Override

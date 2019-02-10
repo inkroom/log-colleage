@@ -28,7 +28,7 @@ public class ServerService implements MessageListener {
     @Autowired
     private ServerDao dao;
 
-    public ServerService(@Autowired MessageCenter center, @Value("${mq.channel.heartbeat}") String heartChannel) {
+    public ServerService(@Autowired MessageCenter center, @Value("${mq.channel.topic.heartbeat}") String heartChannel) {
         logger.info("注册心跳包消息监听，频道={},类型=topic", heartChannel);
         center.addListener(this, heartChannel, true);
         this.heartChannel = heartChannel;

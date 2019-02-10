@@ -54,3 +54,9 @@
 
 - elementUI
 - vue
+
+### 注意事项
+
+- 日志消息保证有server接收的同时，也要保证web端一定可以收到消息用于实时日志
+> client server之间使用queue，server收到消息后发送到topic，web端通过订阅topic获取消息 
+> web如果没有socket连接则不订阅topic

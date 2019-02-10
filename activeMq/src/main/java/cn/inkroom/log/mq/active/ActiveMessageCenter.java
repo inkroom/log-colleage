@@ -2,10 +2,12 @@ package cn.inkroom.log.mq.active;
 
 import cn.inkroom.log.mq.MessageCenter;
 import cn.inkroom.log.mq.MessageListener;
+import cn.inkroom.log.mq.MessageSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
+import java.util.Hashtable;
 
 /**
  * @author 墨盒
@@ -14,12 +16,13 @@ import javax.jms.*;
 public class ActiveMessageCenter implements MessageCenter {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
-
-
     private Session session;
+
+    private Hashtable<MessageListener, ActiveMessageListener> listeners;
 
     public ActiveMessageCenter(Session session) {
         this.session = session;
+        listeners = new Hashtable<>();
     }
 
     @Override
@@ -38,6 +41,7 @@ public class ActiveMessageCenter implements MessageCenter {
 //            if (listener instanceof ActiveMessageListener) {
             ActiveMessageListener activeMessageListener = new ActiveMessageListener(listener, consumer, channel);
 
+            listeners.put(listener, activeMessageListener);
             new Thread(activeMessageListener).start();
 
 //            }
@@ -45,5 +49,14 @@ public class ActiveMessageCenter implements MessageCenter {
             logger.warn(e.getMessage());
         }
 
+    }
+
+    @Override
+    public void removeListener(MessageListener listener, String channel) {
+        ActiveMessageListener lis = listeners.get(listener);
+        if (lis != null && lis.getChannel().equals(channel)) {
+            lis.setStop(true);
+            listeners.remove(listener);
+        }
     }
 }

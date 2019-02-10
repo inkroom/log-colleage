@@ -1,33 +1,63 @@
 <!--
+ 基础布局文件
  created by 墨盒
  created at 19-2-9
  -->
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <title>布局元素</title>
+    <title>首页</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="resources/css/common.css">
+    <style>
+        header a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+    </style>
 </head>
-
 <body>
-<div th:fragment="header">
-    <el-header>
-        <el-col :span="3" :offset="8">
-            <p>server状态</p>
-        </el-col>
-        <el-col :span="3">
-            <p>日志文件</p>
-        </el-col>
-        <el-col :span="3">
-            <p>实时日志</p>
-        </el-col>
-    </el-header>
+<div id="container">
+    <el-container>
+        <el-header>
+            <el-col :span="3" :offset="8" onclick=" this.getElementsByTagName('a')[0] .click()">
+                <p><a href="index">server状态</a></p>
+            </el-col>
+            <el-col :span="3" onclick="this.getElementsByTagName('a')[0].click()">
+                <p>日志文件</p>
+            </el-col>
+            <el-col :span="3" onclick="this.getElementsByTagName('a')[0].click()">
+                <p><a href="actual">实时日志</a></p>
+            </el-col>
+        </el-header>
+        <el-main>
+            <th:block layout:fragment="content"/>
+        </el-main>
+        <el-footer style="text-align: center">
+            @Copyright 墨盒
+        </el-footer>
+    </el-container>
 </div>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+<script src="resources/js/common.js"></script>
+
+<th:block layout:fragment="script"></th:block>
+<script type="text/javascript">
+    if (vue_data != null) {
+        vue_data.el = '#container'
+        var vue = new Vue(vue_data);
+    }
+
+</script>
 </body>
-
 </html>
-    
