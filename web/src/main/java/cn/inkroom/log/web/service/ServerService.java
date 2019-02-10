@@ -34,10 +34,28 @@ public class ServerService implements MessageListener {
         this.heartChannel = heartChannel;
     }
 
-    public List<Server> getServerList() throws Exception {
-        return dao.selectServer();
+    public List<Server> getServerList() throws RuntimeException {
+        try {
+            return dao.selectServer();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    /**
+     * 根据ip地址删除
+     *
+     * @param ip ip
+     * @return 受影响行数
+     * @throws Exception 异常
+     */
+    public int deleteServer(String ip) throws RuntimeException {
+        try {
+            return dao.deleteServerByIp(ip);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public boolean onMessage(String message, String channel) {

@@ -18,10 +18,24 @@
             text-decoration: none;
             color: inherit;
             display: block;
+            outline: none;
+        }
+
+        header a:active {
+            text-decoration: none;
+        }
+
+        #mask {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background-color: white;
+            z-index: 999999;
         }
     </style>
 </head>
 <body>
+<div id="mask"></div>
 <div id="container">
     <el-container>
         <el-header>
@@ -57,7 +71,8 @@
         vue_data.el = '#container'
         var vue = new Vue(vue_data);
     }
-
+    var mask = document.getElementById('mask')
+    mask.parentNode.removeChild(mask);
 </script>
 </body>
 </html>

@@ -34,6 +34,7 @@
         <el-col :span="6" :offset="index % 3 ==0 ? 2:1"
                 v-for=" (item,index ) in servers.slice( (n -1) * 3, (n)*3 ) ">
             <el-card :body-style="{background:item.status ? '#409EFF' : '#F56C6C'}">
+                <i class="el-icon-delete" style="float: right;cursor: pointer" @click="rm(index)"></i>
                 <p>
                     <span>ip:{{item.ip}}</span>
                     <span>状态:<span
@@ -55,7 +56,7 @@
 
 <th:block layout:fragment="script">
     <script type="text/javascript">
-        var vue_data={
+        var vue_data = {
             data: {
                 servers: [],
                 statics: {
@@ -64,12 +65,22 @@
                     down: 0
                 }
             },
+            methods: {
+                rm: function (index) {
+                    var _this = this;
+                    axios.get('rm',{ params: {ip: this.servers[index].ip}})
+                        .then(function (response) {
+                            if (response.data.code === 0) {
+                                _this.servers.splice(index, 1);
+                            }
+                        })
+                }
+            },
             mounted() {
                 var _this = this;
                 axios
                     .get('list')
                     .then(function (response) {
-                        console.log(response);
                         if (response.data.code === 0) {
                             _this.servers = response.data.data;
                             _this.statics.total = response.data.data.length;

@@ -21,7 +21,7 @@ import java.util.Date;
  * @author 墨盒
  * @date 18-11-5
  */
-public class SocketAppender extends AppenderSkeleton {
+public class InkMQAppender extends AppenderSkeleton {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -35,6 +35,16 @@ public class SocketAppender extends AppenderSkeleton {
     private String url;
 
     private String localIp;
+
+    private String tag;
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
     public String getChannel() {
         return channel;
@@ -97,7 +107,7 @@ public class SocketAppender extends AppenderSkeleton {
         logMsg.setMsg(msg);
         logMsg.setTime(new Date(event.getTimeStamp()));
         logMsg.setIp(localIp);
-
+        logMsg.setTag(tag);
 //TODO 18-11-20 注意处理activeMq断掉的情况
         sender.send(logMsg.toString(), channel, false);
     }

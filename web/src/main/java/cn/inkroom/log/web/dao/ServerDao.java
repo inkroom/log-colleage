@@ -38,15 +38,27 @@ public interface ServerDao {
 
     /**
      * 添加server
+     *
      * @param server server
      * @return 受影响行数
      * @throws Exception 异常
      */
     int insertServer(@Param("s") Server server) throws Exception;
+
     /**
      * 将所有server置为宕机状态
+     *
      * @return 受影响行数
      * @throws Exception 异常
      */
     int updateAllServerStop() throws Exception;
+
+    /**
+     * 根据ip地址删除
+     *
+     * @param ip ip
+     * @return 受影响行数
+     * @throws Exception 异常
+     */
+    int deleteServerByIp(@Param("ip") String ip) throws Exception;
 }

@@ -37,7 +37,6 @@ public class ActiveMessageCenter implements MessageCenter {
                 destination = session.createQueue(channel);
             }
             consumer = session.createConsumer(destination);
-
 //            if (listener instanceof ActiveMessageListener) {
             ActiveMessageListener activeMessageListener = new ActiveMessageListener(listener, consumer, channel);
 

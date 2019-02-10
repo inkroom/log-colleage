@@ -30,6 +30,7 @@ public class MqLogTest {
             logger.info(str[new Random().nextInt(str.length)]);
         }
 
+//        logger.debug("测试tag");
 
     }
 }

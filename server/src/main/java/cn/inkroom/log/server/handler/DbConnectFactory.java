@@ -24,8 +24,9 @@ public class DbConnectFactory {
     private String url;
     private String database;
 
-    private String time = "5d";//保存数据时长
+    private String time;//保存数据时长
 
+    private String policy = "log_policy";
     private InfluxDB db;
 
     public DbConnectFactory(String username, String password, String url, String database, String time) {
@@ -38,10 +39,11 @@ public class DbConnectFactory {
         db = InfluxDBFactory.connect(url, username, password);
         db.setDatabase(database);
 
-        // TODO: 19-1-8 保留策略有问题
+// 非默认策略需要在write时制定策略名称，默认策略来自于创建数据库，只能alter，不能create
+        String command = String.format("CREATE RETENTION POLICY \"%s\" ON \"%s\" DURATION %s REPLICATION %s",
+                policy, database, this.time, 1);
 
-        String command = String.format("CREATE RETENTION POLICY \"%s\" ON \"%s\" DURATION %s REPLICATION %s DEFAULT",
-                "default", database, time, 1);
+        logger.info("创建策略{}={}", policy, command);
         this.query(command);
 
     }
@@ -66,7 +68,6 @@ public class DbConnectFactory {
 
         builder.time(timestamp, TimeUnit.MILLISECONDS);
 
-
-        db.write(database, "", builder.build());
+        db.write(database, policy, builder.build());
     }
 }

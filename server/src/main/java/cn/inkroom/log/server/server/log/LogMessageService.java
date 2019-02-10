@@ -46,7 +46,7 @@ public class LogMessageService implements MessageListener {
         //转换成LogMsg
         try {
             LogMsg msg = LogMsg.getInstanceFromJson(message);
-            logger.debug("转换之后的json={}", msg);
+//            logger.debug("转换之后的json={}", msg);
             //发送出去
             sender.send(message, topicChannel, true);
             //执行入库操作
