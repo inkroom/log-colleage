@@ -49,7 +49,7 @@ public class ActiveMessageListener implements Runnable {
 
     @Override
     public void run() {
-        while (stop) {
+        while (!stop) {
             try {
                 Message message = consumer.receive();
                 if (message instanceof TextMessage) {
@@ -61,6 +61,11 @@ public class ActiveMessageListener implements Runnable {
             } catch (JMSException e) {
                 logger.warn(e.getMessage());
             }
+        }
+        try {
+            consumer.close();
+        } catch (JMSException e) {
+            logger.warn("关闭订阅错误", e);
         }
     }
 

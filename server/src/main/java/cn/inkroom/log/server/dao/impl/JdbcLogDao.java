@@ -43,6 +43,11 @@ public class JdbcLogDao implements LogDao {
         return 1;
     }
 
+    private String getValueFromInfluxList(Object value) {
+        if (value == null) return null;
+        return value.toString();
+    }
+
     @Override
     public List<LogMsg> selectByTime(long start, long end) throws Exception {
 //influxdb 判断时间需要加上单位，因为默认纳秒级别
@@ -59,12 +64,13 @@ public class JdbcLogDao implements LogDao {
             for (List<Object> value : values) {
                 LogMsg msg = new LogMsg();
                 int i = 0;
+                logger.debug("value={}", value);
                 //本身时间是一个double类型
                 msg.setTime(new Date(((Double) value.get(i++)).longValue()));
 //                logger.debug("class={},time={}", value.get(i).getClass(), value.get(i++).toString());
-                msg.setMsg(value.get(i++).toString());
-                msg.setTag(value.get(i++).toString());
-                msg.setIp(value.get(i++).toString());
+                msg.setMsg(getValueFromInfluxList(value.get(i++)));
+                msg.setTag(getValueFromInfluxList(value.get(i++)));
+                msg.setIp(getValueFromInfluxList(value.get(i++)));
 
                 msgs.add(msg);
             }
@@ -83,8 +89,6 @@ public class JdbcLogDao implements LogDao {
 
         return null;
     }
-
-
 
 
 }

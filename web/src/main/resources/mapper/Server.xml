@@ -26,4 +26,8 @@
         insert into SERVER (IP, RUN, STATUS, FILE_PORT, LAST)
          values (#{s.ip},#{s.run},#{s.status},#{s.filePort},#{s.last});
     </insert>
+
+    <delete id="deleteServerByIp">
+        delete from SERVER where ip  = #{ip};
+    </delete>
 </mapper>

@@ -32,6 +32,7 @@ public class IndexController {
 
     @RequestMapping("index")
     public String index() throws RuntimeException {
+
         logger.debug("{}", PropertiesHandler.getProperties());
         logger.debug("属性 active.profile={}", System.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME));
         logger.debug("属性 default.profile={}", System.getProperty(AbstractEnvironment.DEFAULT_PROFILES_PROPERTY_NAME));
@@ -42,12 +43,18 @@ public class IndexController {
     @RequestMapping("list")
     @ResponseBody
     public MessageDto<List<Server>> list() throws RuntimeException {
-        try {
-            List<Server> list = serverService.getServerList();
-            return new MessageDto<>(0, list);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        List<Server> list = serverService.getServerList();
+        return new MessageDto<>(0, list);
+    }
+
+    @RequestMapping("rm")
+    @ResponseBody
+    public MessageDto<Server> rm(String ip) throws RuntimeException {
+
+        if (ip == null || ip.isEmpty()) {
+            return new MessageDto<>(3);
         }
+        return new MessageDto<>(serverService.deleteServer(ip) == 1 ? 0 : 1);
     }
 
 }

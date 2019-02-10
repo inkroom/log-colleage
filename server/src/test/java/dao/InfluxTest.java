@@ -46,8 +46,7 @@ public class InfluxTest {
     @Test
     public void testQuery() throws Exception {
 
-
-        dao.selectByTime(0, new Date().getTime());
+        logger.debug("{}", dao.selectByTime(0, new Date().getTime()));
 
 
     }
