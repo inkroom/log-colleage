@@ -1,0 +1,103 @@
+<!--
+实时日志
+ created by 墨盒
+ created at 19-2-10
+ -->
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="common/_layout">
+
+<head>
+    <title>实时日志</title>
+    <style>
+        .message-container {
+            overflow-y: scroll;
+            height: 500px;
+            border: black 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+<th:block layout:fragment="content">
+    <div class="message-header">
+        <el-alert
+                title="请注意，实时日志在高并发情况下可能存在一定程度的乱序"
+                type="warning"
+                show-icon>
+        </el-alert>
+        <p>链接状态:{{ status==1?'连接中':(status==2?'已连接':(status==3?'已断开':'浏览器不支持')) }}</p>
+    </div>
+    <div class="message-container" ref="content">
+        <div v-for="(item,index) in list">
+            <!--<ul>-->
+                <!--{{ item.line }}&nbsp;&nbsp;-->
+                <!--<li>ip:{{ item.ip }}-{{ item.msg }}</li>-->
+            <!--</ul>-->
+            <span style="float: left;margin-left: 3px;">{{ item.line }}&nbsp;&nbsp;</span>
+            <p style="padding-left: 20px;">ip:{{ item.ip }}-{{ item.msg }}</p>
+
+        </div>
+    </div>
+</th:block>
+<th:block layout:fragment="script">
+    <script type="text/javascript">
+        var vue_data = {
+            data: {
+                status: 1,
+                list: [],
+                line: 1,
+                max: 800
+            },
+            watch: {
+                list: function (ov, nv) {
+                    var _this = this;
+                    setTimeout(function () {
+                        var ele = _this.$refs.content;
+                        ele.scrollTop = ele.scrollHeight;
+                    }, 20);
+
+                }
+            }
+        }
+
+        if (WebSocket) {
+            var socket = new WebSocket('ws://' + location.host + '/actualLog');
+            socket.onmessage = function (ev) {
+                console.log(ev);
+
+                var data = JSON.parse(ev.data.replace(/\\n/g, ' \\n '));
+                data.line = vue.line++;
+                if (vue.list.length > vue.max) {
+                    vue.list.splice(0, 1);
+                }
+
+                vue.list.push(data);
+
+
+                // var ele = vue.$refs.content;
+                // ele.scrollTop = ele.scrollHeight;
+            }
+            socket.onerror = function (ev) {
+            }
+            socket.onopen = function (ev) {
+                vue.status = 2;
+                console.log('open')
+                socket.send('pong2');
+            }
+            socket.onclose = function (ev) {
+                vue.status = 3;
+            }
+        } else {
+            vue.$alert('您的浏览器版本过低，不支持websocket，请升级浏览器');
+            vue.status = 4;
+        }
+
+    </script>
+</th:block>
+</body>
+
+</html>
+    

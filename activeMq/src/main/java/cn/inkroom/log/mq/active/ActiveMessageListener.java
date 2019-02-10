@@ -19,6 +19,20 @@ public class ActiveMessageListener implements Runnable {
     private MessageConsumer consumer;
     private String channel;
 
+    private boolean stop = false;
+
+    public boolean isStop() {
+        return stop;
+    }
+
+    public void setStop(boolean stop) {
+        this.stop = stop;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
     public ActiveMessageListener(MessageListener listener, MessageConsumer consumer, String channel) {
         this.consumer = consumer;
         this.channel = channel;
@@ -35,12 +49,12 @@ public class ActiveMessageListener implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        while (stop) {
             try {
                 Message message = consumer.receive();
                 if (message instanceof TextMessage) {
                     TextMessage textMessage = (TextMessage) message;
-                    if(listener.onMessage(textMessage.getText(), this.channel)){
+                    if (listener.onMessage(textMessage.getText(), this.channel)) {
                         message.acknowledge();
                     }
                 }

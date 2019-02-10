@@ -41,11 +41,10 @@ public class Entry {
 //        server.addConnector(connector);
 
         WebAppContext webContext = new WebAppContext(DEFAULT_WEBAPP_PATH, CONTEXT);
-        webContext.setDescriptor(DEFAULT_WEBAPP_PATH+"/WEB-INF/web.xml");
+        webContext.setDescriptor(DEFAULT_WEBAPP_PATH + "/WEB-INF/web.xml");
         webContext.setResourceBase(DEFAULT_WEBAPP_PATH);
         webContext.setClassLoader(Thread.currentThread().getContextClassLoader());
         server.setHandler(webContext);
-
         return server;
     }
 

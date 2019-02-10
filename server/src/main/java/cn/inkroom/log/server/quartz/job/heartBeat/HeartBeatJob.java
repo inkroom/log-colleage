@@ -28,7 +28,7 @@ public class HeartBeatJob extends QuartzJobBean {
     private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private MessageSender sender;
-    @Value("${mq.channel.heartbeat}")
+    @Value("${mq.channel.topic.heartbeat}")
     private String heartBeatChannel;
     @Value("${socket.port}")
     private int port;
