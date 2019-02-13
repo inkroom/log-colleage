@@ -1,5 +1,6 @@
 package quartz;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class HearBeatTest {
 
     @Test
+    @Ignore
     public void testHeartBeat() throws Exception {
 
         Thread.sleep(1000 * 60 * 4);

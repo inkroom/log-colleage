@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @date 19-2-8
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(value = {"classpath:application.xml"})
+@ContextConfiguration(value = {"classpath*:application.xml"})
 public abstract class BaseTest {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 }

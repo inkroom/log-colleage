@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.File;
+
 /**
  * @author 墨盒
  * @date 18-11-20
@@ -25,6 +27,11 @@ public class Entry {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     public static void main(String[] args) {
+
+
+//        File file = new File("conf/config.properties");
+
+
 
 
 //        Socket socket = new Socket();

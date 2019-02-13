@@ -51,6 +51,7 @@ public class ActiveMessageSender implements MessageSender, Closeable {
 //            session.commit();
         } catch (JMSException e) {
             logger.warn(e.getMessage());
+            return false;
         }
 
         return true;

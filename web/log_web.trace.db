@@ -1,0 +1,9 @@
+2019-02-10 22:07:22 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "SERVER" not found; SQL statement:
+select * from SERVER; [42102-192]
+2019-02-10 22:15:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "SERVER" not found; SQL statement:
+update SERVER set STATUS=false ; [42102-192]
+2019-02-10 22:15:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "SERVER" not found; SQL statement:
+select * from SERVER where ip = ? limit 1; [42102-192]

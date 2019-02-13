@@ -1,5 +1,6 @@
 package cn.inkroom.log.web.bean;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -50,6 +51,6 @@ public class MessageDto<T> {
 
     @Override
     public String toString() {
-        return JSONObject.toJSONString(this);
+        return JSON.toJSONString(this);
     }
 }

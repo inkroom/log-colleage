@@ -36,7 +36,7 @@ public class IndexControllerTest extends BasicControllerTest {
         String url = "/list";
         MvcResult result = mvc.perform(get(url))
                 .andExpect(status().isOk())
-                .andExpect(content().string(new MessageDto<>(0, new ArrayList<>()).toString()))
+//                .andExpect(content().string(new MessageDto<>(0, new ArrayList<>()).toString()))
                 .andExpect(jsonPath("$.code").value(0))
                 .andReturn();
 

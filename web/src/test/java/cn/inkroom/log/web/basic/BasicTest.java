@@ -1,5 +1,6 @@
 package cn.inkroom.log.web.basic;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,4 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class BasicTest {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
+
+    /**
+     * 非得放一个test方法才行，否则要报错
+     */
+    @Test
+    public void testBasic() {}
 }
