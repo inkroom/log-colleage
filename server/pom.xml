@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    <packaging>jar</packaging>
     <parent>
         <groupId>cn.inkroom.log</groupId>
         <artifactId>parent</artifactId>
@@ -81,10 +81,10 @@
         <!--<version>${spring.version}</version>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>${spring.group}</groupId>-->
-            <!--<artifactId>spring-test</artifactId>-->
-            <!--<version>${spring.version}</version>-->
-            <!--<scope>test</scope>-->
+        <!--<groupId>${spring.group}</groupId>-->
+        <!--<artifactId>spring-test</artifactId>-->
+        <!--<version>${spring.version}</version>-->
+        <!--<scope>test</scope>-->
         <!--</dependency>-->
         <!--<dependency>-->
         <!--<groupId>${spring.group}</groupId>-->
@@ -176,6 +176,32 @@
     </dependencies>
 
     <build>
+        <!--<finalName>generateImportCarSql</finalName>-->
+        <!--<sourceDirectory>src/main/java</sourceDirectory>-->
+        <resources>
+            <!-- 控制资源文件的拷贝 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>config.properties</include>
+                    <!--<include>**/*.xml</include>-->
+                    <!--<include>**/*.tld</include>-->
+                </includes>
+                <filtering>true</filtering>
+
+                <!-- 配置文件外置（在打包时取消注释）
+                    资源文件拷贝到编译输出路径target的子文件夹config目录下，最终结构如下:
+                    target
+                       ...config
+                           ...spring
+                           ...mapper
+                           ...env
+                       ...lib
+                       ...generateImportCarSql.jar
+                 -->
+                <targetPath>${project.build.directory}/config</targetPath>
+            </resource>
+        </resources>
         <plugins>
             <!-- maven sql 插件 -->
             <plugin>
@@ -198,6 +224,92 @@
                         <srcFile>src/test/resources/log_server.sql</srcFile>
                     </srcFiles>
                 </configuration>
+            </plugin>
+            <!-- 设置编译版本 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <!-- 打包jar文件时，配置manifest文件，加入lib包的jar依赖 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <!--不知道哪个起作用了，就这样放着吧-->
+                        <!--<exclude>src/main/resources/config.properties</exclude>-->
+                        <exclude>/config.properties</exclude>
+                        <exclude>config.properties</exclude>
+                        <exclude>classes/config.properties</exclude>
+                    </excludes>
+                    <archive>
+                        <!-- 清单文件 -->
+                        <manifest>
+                            <mainClass>cn.inkroom.log.server.Entry</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <!--<class></class>-->
+                            <classpathPrefix>lib/*</classpathPrefix>
+                        </manifest>
+                        <!-- 给清单文件添加键值对(配置文件外置) -->
+                        <manifestEntries>
+                            <Class-Path>config/</Class-Path>
+                        </manifestEntries>
+                    </archive>
+                    <classesDirectory>
+                    </classesDirectory>
+                </configuration>
+            </plugin>
+            <!-- 拷贝依赖的jar包到lib目录 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/lib
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- 解决资源文件的编码问题 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <!-- 打包source文件为jar文件 -->
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1</version>
+                <configuration>
+                    <attach>true</attach>
+                    <!--<encoding>UTF-8</encoding>-->
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

@@ -27,11 +27,11 @@
     </bean>
 
     <bean class="cn.inkroom.log.server.handler.DbConnectFactory">
-        <constructor-arg name="database" value="log"/>
-        <constructor-arg name="time" value="5d"/>
-        <constructor-arg name="url" value="http://www.inkroom.cn:8086"/>
-        <constructor-arg name="username" value="admin"/>
-        <constructor-arg name="password" value=""/>
+        <constructor-arg name="database" value="${influx.database}"/>
+        <constructor-arg name="time" value="${influx.time}"/>
+        <constructor-arg name="url" value="${influx.url}"/>
+        <constructor-arg name="username" value="${influx.username}"/>
+        <constructor-arg name="password" value="${influx.password}"/>
     </bean>
 
 

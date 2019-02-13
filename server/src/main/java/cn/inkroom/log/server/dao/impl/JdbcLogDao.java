@@ -57,7 +57,7 @@ public class JdbcLogDao implements LogDao {
         List<QueryResult.Result> list = result.getResults();
 
 
-        if (list.size() > 0) {//有数据
+        if (list.size() > 0 && list.get(0).getSeries() != null) {//有数据
             List<LogMsg> msgs = new ArrayList<>(list.get(0).getSeries().size());
 
             List<List<Object>> values = list.get(0).getSeries().get(0).getValues();

@@ -16,7 +16,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @WebAppConfiguration
 @ContextConfiguration({"classpath:spring/application.xml", "classpath:spring/applicationMVC.xml"})
-public class BasicControllerTest extends BasicTest {
+public class BasicControllerTest extends BasicDaoTest {
     protected Logger logger = LoggerFactory.getLogger(getClass());
     protected MockMvc mvc;
     @Autowired

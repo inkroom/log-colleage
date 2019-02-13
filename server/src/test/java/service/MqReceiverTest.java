@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath*:application.xml"})
-public class MqReceverTest {
+public class MqReceiverTest {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 

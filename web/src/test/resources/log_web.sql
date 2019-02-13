@@ -1,6 +1,6 @@
 
 -- server端状态记录
-create table server
+create table if not exists server
 (
 	ip varchar(30) not null,
 	run long not null,

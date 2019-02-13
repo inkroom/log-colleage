@@ -1,4 +1,4 @@
-package dao;
+package cn.inkroom.log.test.dao;
 import base.BaseTest;
 import cn.inkroom.log.model.LogBackup;
 import cn.inkroom.log.server.dao.h2.BackupDao;

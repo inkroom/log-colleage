@@ -1,4 +1,4 @@
-package dao;
+package cn.inkroom.log.test.dao;
 
 import cn.inkroom.log.web.basic.BasicDaoTest;
 import cn.inkroom.log.web.basic.BasicTest;
@@ -51,7 +51,11 @@ public class ServerDaoTest extends BasicDaoTest {
     }
 
     @Test
+    @Rollback
     public void testSelectServer() throws Exception {
+        // 单个测试没问题，，，但是整个test就会报错，可能是数据回滚有问题
+        jdbcTemplate.update("delete from SERVER");
+
         String ip = "192.15.34.1";
         insertServer(ip);
         ip = "192.22.34.43";
