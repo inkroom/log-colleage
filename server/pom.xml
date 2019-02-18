@@ -179,6 +179,7 @@
         <!--<finalName>generateImportCarSql</finalName>-->
         <!--<sourceDirectory>src/main/java</sourceDirectory>-->
         <resources>
+
             <!-- 控制资源文件的拷贝 -->
             <resource>
                 <directory>src/main/resources</directory>
@@ -200,6 +201,12 @@
                        ...generateImportCarSql.jar
                  -->
                 <targetPath>${project.build.directory}/config</targetPath>
+            </resource>
+            <!--以下用于处理test时资源文件找不到问题-->
+            <resource>
+                <directory>src/main/resources</directory>
+                <!--<includes>*.*</includes>-->
+                <filtering>false</filtering>
             </resource>
         </resources>
         <plugins>

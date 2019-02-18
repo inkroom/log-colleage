@@ -25,6 +25,9 @@ public class JdbcLogDao implements LogDao {
     @Autowired
     private DbConnectFactory factory;
 
+    public JdbcLogDao(){
+        logger.debug("dao层被注入");
+    }
 
     @Override
     public int insert(LogMsg msg) throws Exception {

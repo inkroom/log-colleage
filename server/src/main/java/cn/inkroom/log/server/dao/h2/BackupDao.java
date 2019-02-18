@@ -2,6 +2,8 @@ package cn.inkroom.log.server.dao.h2;
 
 import cn.inkroom.log.model.LogBackup;
 
+import java.util.List;
+
 /**
  * 用于存储日志文件路径等数据<br>
  * 使用h2数据库
@@ -20,4 +22,11 @@ public interface BackupDao {
      * @throws Exception 异常
      */
     LogBackup selectLast() throws Exception;
+
+    /**
+     * 获取所有备份记录
+     * @return
+     * @throws Exception
+     */
+    List<LogBackup> selectAll() throws Exception;
 }
