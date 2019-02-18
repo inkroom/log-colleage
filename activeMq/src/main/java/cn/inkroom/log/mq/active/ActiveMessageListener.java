@@ -60,6 +60,7 @@ public class ActiveMessageListener implements Runnable {
                 }
             } catch (JMSException e) {
                 logger.warn(e.getMessage());
+                break;
             }
         }
         try {

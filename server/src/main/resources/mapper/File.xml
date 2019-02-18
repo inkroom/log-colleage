@@ -18,5 +18,12 @@
 
     </insert>
 
+  <select id="selectLast" resultType="cn.inkroom.log.model.LogBackup">
+    select * from backup order  by created limit 1
+  </select>
+
+  <select id="selectAll" resultType="cn.inkroom.log.model.LogBackup">
+    select * from backup order  by created
+  </select>
 
 </mapper>

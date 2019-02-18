@@ -1,5 +1,7 @@
 package cn.inkroom.log.server.socket;
 
+import cn.inkroom.log.server.server.log.BackupService;
+import com.alibaba.fastjson.JSON;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
@@ -14,6 +16,9 @@ import io.vertx.core.net.NetServer;
 import io.vertx.core.net.NetSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.xml.ws.soap.Addressing;
 
 /**
  * @author 墨盒
@@ -26,7 +31,8 @@ public class SocketHandler extends ChannelInboundHandlerAdapter implements Handl
     public static Channel channel;
 
     private NetSocket socket;
-
+    @Autowired
+    private BackupService backupService;
 
     public SocketHandler(int port) {
 
@@ -34,12 +40,9 @@ public class SocketHandler extends ChannelInboundHandlerAdapter implements Handl
 
         Vertx vertx = Vertx.vertx();
         NetServer server = vertx.createNetServer();
-        server.connectHandler(new Handler<NetSocket>() {
-            @Override
-            public void handle(NetSocket socket) {
-                SocketHandler.this.socket = socket;
-                socket.handler(SocketHandler.this);
-            }
+        server.connectHandler(socket -> {
+            SocketHandler.this.socket = socket;
+            socket.handler(SocketHandler.this);
         }).listen(port);
     }
 
@@ -52,7 +55,8 @@ public class SocketHandler extends ChannelInboundHandlerAdapter implements Handl
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         super.channelActive(ctx);
-        ByteBuf buf = Unpooled.buffer(100);
+        logger.debug("socket被连接");
+//        ByteBuf buf = Unpooled.buffer(100);
 //String msg = "新消息";
 //        ByteBufUtil.writeAscii(buf,msg);
 ////        for (int i = 0; i < msg.length(); i++) {
@@ -63,13 +67,13 @@ public class SocketHandler extends ChannelInboundHandlerAdapter implements Handl
 ////        ctx.channel().flush();
 
 
-        byte[] data = "服务器，给我一个APPLE".getBytes();
-        buf = Unpooled.buffer();
-        buf.writeBytes(data);
-        ctx.writeAndFlush(buf);
-        synchronized (SocketHandler.class) {
-            channel = ctx.channel();
-        }
+//        byte[] data = "服务器，给我一个APPLE".getBytes();
+//        buf = Unpooled.buffer();
+//        buf.writeBytes(data);
+//        ctx.writeAndFlush(buf);
+//        synchronized (SocketHandler.class) {
+//            channel = ctx.channel();
+//        }
 
     }
 
@@ -83,8 +87,15 @@ public class SocketHandler extends ChannelInboundHandlerAdapter implements Handl
     public void handle(Buffer buffer) {
 
         String filename = buffer.toString();
-        logger.debug("文件名={}", buffer.toString());
 
+        if ("list".equals(filename)) {
+            logger.info("开始获取备份文件列表");
+            logger.debug("备份文件列表={}", backupService.list());
+            //获取文件列表
+            socket.write(JSON.toJSONString(backupService.list()));
+            return;
+        }
+        logger.debug("文件名={}", buffer.toString());
         socket.sendFile(filename);
 
     }
