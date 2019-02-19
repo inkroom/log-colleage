@@ -79,6 +79,8 @@ configuration 子节点为 appender、logger、root
     <logger name="org.thymeleaf" level="WARN" />
     <logger name="o.a.a.t.AbstractInactivityMonitor" level="WARN"/>
 
+    <logger name="org.eclipse.jetty" level="WARN"/>
+    <logger name="org.apache.activemq" level="WARN"/>
 
     <!--为某个包单独配置logger
 

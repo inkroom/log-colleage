@@ -30,7 +30,7 @@ public class BackupJob extends QuartzJobBean {
     private String dir;
 
     @Override
-    protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+    public void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 
         try {
             LogBackup backup = dao.selectLast();
@@ -44,12 +44,15 @@ public class BackupJob extends QuartzJobBean {
             backup.setPath(dir + File.separator + System.currentTimeMillis() + ".log");
 
             int size = service.backup(backup.getStart().getTime(), backup.getEnd().getTime(), backup.getPath());
-            backup.setCreated(new Date());
-            backup.setSize(size);
-            backup.setLength(new File(backup.getPath()).length());
-            if (dao.insertFile(backup) != 1) {
-                logger.warn("存储日志文件路径失败，文件信息={}", backup);
+            if (size > 0) {//没有日志被存储，不入库
+                backup.setCreated(new Date());
+                backup.setSize(size);
+                backup.setLength(new File(backup.getPath()).length());
+                if (dao.insertFile(backup) != 1) {
+                    logger.warn("存储日志文件路径失败，文件信息={}", backup);
+                }
             }
+
         } catch (Exception e) {
             throw new JobExecutionException(e);
         }

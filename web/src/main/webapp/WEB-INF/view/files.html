@@ -27,8 +27,8 @@
                     <template slot="title">
                         ip:{{ ip.ip }}
                     </template>
-                    <ul>
-                        <li v-for="file in ip.files">{{ file.name }}</li>
+                    <ul style="padding-left: 0">
+                        <li v-for="file in ip.files">{{ getFileName(file.path) }}&nbsp; 创建于{{ new Date(file.created).formatDate('yyyy-MM-dd HH:mm') }} &nbsp;<a style="float: right" href="javascript:;">下载</a></li>
                     </ul>
                 </el-collapse-item>
             </el-collapse>
@@ -67,12 +67,27 @@
                     }
                 ]
             },
+            computed: {},
             methods: {
+                getFileName: function (path) {
+                    var regex = new RegExp('/([^/]+$)');
+                    var res = regex.exec(path);
+                    if (res == null) return path;
+                    return regex.exec(path)[1];
+                },
+
                 change: function (value) {
                     var ip = value[0];
 
                     var _this = this;
-                    axios.get('fileList',{params:{ip:ip}}).then(function (res) {
+                    axios.get('fileList', {params: {ip: ip}}).then(function (res) {
+                        if (res.data.code === 0)
+                            for (var i = 0; i < _this.ips.length; i++) {
+                                if (_this.ips[i].ip === ip) {
+                                    _this.ips[i].files = res.data.data;
+                                }
+                            }
+
                         console.log(res);
                     })
                     console.log(ip);

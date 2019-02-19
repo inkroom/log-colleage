@@ -53,7 +53,9 @@ public class LogService {
 
         //读取数据
         List<LogMsg> msgs = dao.selectByTime(start, end);
-
+        if (msgs == null) {
+            return 0;
+        }
         File file = new File(path);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
