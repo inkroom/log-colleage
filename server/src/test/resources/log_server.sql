@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS backup (
 );
 alter table backup alter column ID INTEGER auto_increment;
 
-comment on table "backup" is '文件备份';
+comment on table backup is '文件备份';
 
 
 -- 记录定时任务起始段
