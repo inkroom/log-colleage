@@ -52,6 +52,7 @@ public class DbConnectFactory {
     public QueryResult query(String command) {
         //TODO 19-2-10 influxdb 自带的web时区有问题（test插入正确，web查询显示错误），但是直接query时区没有问题
         //指定单位毫秒，否则输出rfc3339_date_time_string 格式时间，且用UTC，比北京时间早八个小时
+        logger.debug("influxdb sql语句={}", command);
         return db.query(new Query(command, database), TimeUnit.MILLISECONDS);
     }
 
@@ -70,6 +71,6 @@ public class DbConnectFactory {
 
         builder.time(timestamp, TimeUnit.MILLISECONDS);
 
-        db.write(database,policy, builder.build());
+        db.write(database, policy, builder.build());
     }
 }

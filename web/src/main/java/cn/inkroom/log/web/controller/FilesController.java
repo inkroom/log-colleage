@@ -1,5 +1,6 @@
 package cn.inkroom.log.web.controller;
 
+import cn.inkroom.log.model.LogBackup;
 import cn.inkroom.log.web.bean.MessageDto;
 import cn.inkroom.log.web.service.FileService;
 import org.slf4j.Logger;
@@ -35,13 +36,13 @@ public class FilesController {
 
     @RequestMapping("fileList")
     @ResponseBody
-    public MessageDto<List<File>> list(String ip) throws RuntimeException {
+    public MessageDto<List<LogBackup>> list(String ip) throws RuntimeException {
         if (StringUtils.isEmpty(ip)) {
 
             return new MessageDto<>(3);
         }
 
-        List<File> files = fileService.list(ip);
+        List<LogBackup> files = fileService.list(ip);
         if (files != null) {
             return new MessageDto<>(0, files);
         } else {

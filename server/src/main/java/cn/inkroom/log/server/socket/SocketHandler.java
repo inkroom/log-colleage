@@ -88,15 +88,20 @@ public class SocketHandler extends ChannelInboundHandlerAdapter implements Handl
 
         String filename = buffer.toString();
 
+        logger.debug(filename);
+        logger.debug("判断结果={}", "list".equals(filename));
+        logger.debug("判断结果={}", filename.equals("list"));
         if ("list".equals(filename)) {
             logger.info("开始获取备份文件列表");
             logger.debug("备份文件列表={}", backupService.list());
             //获取文件列表
             socket.write(JSON.toJSONString(backupService.list()));
+            socket.end();
+//            socket.fetch()
             return;
         }
         logger.debug("文件名={}", buffer.toString());
         socket.sendFile(filename);
-
+        socket.close();
     }
 }
