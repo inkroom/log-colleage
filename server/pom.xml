@@ -224,7 +224,7 @@
                 </dependencies>
                 <configuration>
                     <driver>org.h2.Driver</driver>
-                    <url>jdbc:h2:./log_server</url>
+                    <url>jdbc:h2:./../log_server</url>
                     <!--<username>sa</username>-->
                     <!--<password></password>-->
                     <srcFiles>
