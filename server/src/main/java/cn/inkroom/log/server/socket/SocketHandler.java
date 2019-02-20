@@ -17,8 +17,10 @@ import io.vertx.core.net.NetSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.xml.ws.soap.Addressing;
+import java.io.File;
 
 /**
  * @author 墨盒
@@ -33,6 +35,9 @@ public class SocketHandler extends ChannelInboundHandlerAdapter implements Handl
     private NetSocket socket;
     @Autowired
     private BackupService backupService;
+
+    @Value("${quartz.backup.dir}")
+    private String backupDir;
 
     public SocketHandler(int port) {
 
@@ -100,8 +105,8 @@ public class SocketHandler extends ChannelInboundHandlerAdapter implements Handl
 //            socket.fetch()
             return;
         }
-        logger.debug("文件名={}", buffer.toString());
-        socket.sendFile(filename);
+        logger.debug("文件路径={}", backupDir + File.separator + filename);
+        socket.sendFile(backupDir + File.separator + filename);
         socket.close();
     }
 }

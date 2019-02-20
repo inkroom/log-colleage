@@ -12,7 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,6 +32,8 @@ public class FilesController {
 
     @Autowired
     private HttpServletRequest request;
+    @Autowired
+    private HttpServletResponse response;
     @Autowired
     private FileService fileService;
 
@@ -49,6 +57,33 @@ public class FilesController {
             return new MessageDto<>(1);
         }
 
+    }
+
+    @RequestMapping("download")
+    @ResponseBody
+    public void download(String name, String ip) throws IOException {
+        if (StringUtils.isEmpty(name) || StringUtils.isEmpty(ip)) {
+
+            return;
+        }
+
+
+        InputStream inputStream = fileService.download(name, ip);
+        if (inputStream == null) {
+            response.sendError(404);
+        }
+        response.addHeader("Content-Disposition", "attachment;filename=" + new String((ip + "_" + name).getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
+
+
+        OutputStream output = response.getOutputStream();
+        byte[] buff = new byte[1024 * 10];//可以自己 指定缓冲区的大小
+        int len = 0;
+        while ((len = inputStream.read(buff)) > -1) {
+            output.write(buff, 0, len);
+        }
+        //关闭输入输出流
+        inputStream.close();
+        output.close();
     }
 
 }

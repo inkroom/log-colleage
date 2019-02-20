@@ -28,7 +28,11 @@
                         ip:{{ ip.ip }}
                     </template>
                     <ul style="padding-left: 0">
-                        <li v-for="file in ip.files">{{ getFileName(file.path) }}&nbsp; 创建于{{ new Date(file.created).formatDate('yyyy-MM-dd HH:mm') }} &nbsp;<a style="float: right" href="javascript:;">下载</a></li>
+                        <li v-for="file in ip.files">{{ getFileName(file.path) }}&nbsp; 创建于{{ new
+                            Date(file.created).formatDate('yyyy-MM-dd HH:mm') }} &nbsp;<a style="float: right"
+                                                                                          href="javascript:;"
+                                                                                          @click="download(ip,file)">下载</a>
+                        </li>
                     </ul>
                 </el-collapse-item>
             </el-collapse>
@@ -41,31 +45,42 @@
         var vue_data = {
             data: {
                 ips: [
-                    {
-                        ip: '127.0.1.1',
-                        files: [
-                            {name: '2018-3-1.log'}
-                        ]
-                    },
-                    {
-                        ip: '127.0.0.2',
-                        files: [
-                            {name: '2018-3-1.log'}
-                        ]
-                    },
-                    {
-                        ip: '127.0.0.4',
-                        files: [
-                            {name: '2018-3-1.log'}
-                        ]
-                    },
-                    {
-                        ip: '127.0.0.3',
-                        files: [
-                            {name: '2018-3-1.log'}
-                        ]
-                    }
+                    // {
+                    //     ip: '127.0.1.1',
+                    //     files: [
+                    //         {name: '2018-3-1.log'}
+                    //     ]
+                    // },
+                    // {
+                    //     ip: '127.0.0.2',
+                    //     files: [
+                    //         {name: '2018-3-1.log'}
+                    //     ]
+                    // },
+                    // {
+                    //     ip: '127.0.0.4',
+                    //     files: [
+                    //         {name: '2018-3-1.log'}
+                    //     ]
+                    // },
+                    // {
+                    //     ip: '127.0.0.3',
+                    //     files: [
+                    //         {name: '2018-3-1.log'}
+                    //     ]
+                    // }
                 ]
+            },
+            mounted: function () {
+                var _this = this;
+                axios
+                    .get('list')
+                    .then(function (response) {
+                        if (response.data.code === 0) {
+                            _this.ips = response.data.data;
+                        }
+
+                    })
             },
             computed: {},
             methods: {
@@ -75,7 +90,9 @@
                     if (res == null) return path;
                     return regex.exec(path)[1];
                 },
-
+                download: function (ip, file) {
+                    window.open('download?ip=' + ip.ip + '&name=' + new RegExp('/([^/]+$)').exec(file.path)[1]);
+                },
                 change: function (value) {
                     var ip = value[0];
 
@@ -83,13 +100,15 @@
                     axios.get('fileList', {params: {ip: ip}}).then(function (res) {
                         if (res.data.code === 0)
                             for (var i = 0; i < _this.ips.length; i++) {
+                                console.log(_this.ips[i].ip + '___' + ip);
                                 if (_this.ips[i].ip === ip) {
                                     _this.ips[i].files = res.data.data;
+                                    _this.$set(_this.ips, i, _this.ips[i]);
                                 }
                             }
 
                         console.log(res);
-                    })
+                    });
                     console.log(ip);
                 }
             },
