@@ -29,46 +29,73 @@ public class FileService {
 
     public List<LogBackup> list(String ip) {
 
-        List<Server> servers = serverService.getServerList();
-        for (int i = 0; i < servers.size(); i++) {
-            if (servers.get(i).getIp().equals(ip)) {
 
-                Server server = servers.get(i);
+        //连接socket
 
-                //连接socket
+        try {
+            Socket socket = new Socket(ip, getPort(ip));
 
-                try {
-                    Socket socket = new Socket(ip, server.getFilePort());
+            socket.setSoTimeout(10000);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            writer.write("list");
+            writer.flush();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-//                    socket.setSoTimeout(10000);
-                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-                    writer.write("list");
-                    writer.flush();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            //读取列表
+            String message = reader.readLine();
+            logger.debug("获取的文件列表={}", message);
+            //转换
+            JSONArray array = JSONArray.parseArray(message);
 
-                    //读取列表
-                    String message = reader.readLine();
-                    logger.debug("获取的文件列表={}", message);
-                    //转换
-                    JSONArray array = JSONArray.parseArray(message);
+            List<LogBackup> files = new ArrayList<>();
 
-                    List<LogBackup> files = new ArrayList<>();
+            for (int i = 0; i < array.size(); i++) {
+                LogBackup file = JSON.parseObject(array.getString(i), LogBackup.class);
 
-                    for (int j = 0; j < array.size(); j++) {
-                        LogBackup file = JSON.parseObject(array.getString(i), LogBackup.class);
-
-                        files.add(file);
-                    }
-                    socket.close();
-                    return files;
-
-                } catch (IOException e) {
-                    logger.warn("获取文件列表失败", e);
-                }
+                files.add(file);
             }
+            socket.close();
+            return files;
+
+        } catch (IOException e) {
+            logger.warn("获取文件列表失败", e);
         }
 
         return null;
 
+    }
+
+    private int getPort(String ip) {
+        List<Server> servers = serverService.getServerList();
+        for (Server server : servers) {
+            if (server.getIp().equals(ip)) {
+                return server.getFilePort();
+            }
+        }
+        return -1;
+    }
+
+    public InputStream download(String path, String ip) {
+
+        int port = getPort(ip);
+        if (port == -1) return null;
+
+        try {
+            Socket socket = new Socket(ip, port);
+
+//            socket.setSoTimeout(10000);
+
+            socket.setKeepAlive(true);
+
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));{
+
+                writer.write(path);
+                writer.flush();
+                return socket.getInputStream();
+            }
+        } catch (IOException e) {
+            logger.error("下载日志文件失败", e);
+        }
+        return null;
     }
 }
