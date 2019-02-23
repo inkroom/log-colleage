@@ -5,6 +5,7 @@ import cn.inkroom.log.mq.MessageSender;
 import cn.inkroom.log.mq.active.ActiveMessageSender;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.pattern.LogEvent;
 import org.apache.log4j.spi.LoggingEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,9 @@ import javax.jms.Session;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * @author 墨盒
@@ -26,7 +30,7 @@ public class InkMQAppender extends AppenderSkeleton {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     private MessageSender sender;
-
+    private Queue<LogMsg> queue = new LinkedBlockingDeque<>();
 
     private String username;
     private String password;
@@ -97,19 +101,38 @@ public class InkMQAppender extends AppenderSkeleton {
             sender = new ActiveMessageSender(session);
         } catch (JMSException | UnknownHostException e) {
             e.printStackTrace();
+            System.exit(0);
         }
     }
 
     @Override
     protected void append(LoggingEvent event) {
+        LogMsg logMsg = analyzeLog(event);
+        if (!queue.isEmpty()) {//有以往数据未发送
+            queue.add(logMsg);
+//                为了防止阻塞，将积攒的日志消息分多次发送
+            for (int i = 0; i < 10 && !queue.isEmpty(); i++) {
+                if (sender.send(queue.element().toString(), channel, false)) {
+                    queue.poll();
+                } else {//发送失败
+                    return;
+                }
+            }
+        }
+        if (!sender.send(logMsg.toString(), channel, false)) {
+            //发送失败，入队，等待下次发送日志机会
+            queue.add(logMsg);
+        }
+    }
+
+    private LogMsg analyzeLog(LoggingEvent event) {
         String msg = this.layout.format(event);
         LogMsg logMsg = new LogMsg();
         logMsg.setMsg(msg);
         logMsg.setTime(new Date(event.getTimeStamp()));
         logMsg.setIp(localIp);
         logMsg.setTag(tag);
-//TODO 18-11-20 注意处理activeMq断掉的情况
-        sender.send(logMsg.toString(), channel, false);
+        return logMsg;
     }
 
     @Override
