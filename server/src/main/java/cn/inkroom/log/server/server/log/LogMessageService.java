@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
+
 /**
  * 负责接收日志消息
  *
@@ -46,6 +49,7 @@ public class LogMessageService implements MessageListener {
         //转换成LogMsg
         try {
             LogMsg msg = LogMsg.getInstanceFromJson(message);
+
 //            logger.debug("转换之后的json={}", msg);
             //发送出去
             sender.send(message, topicChannel, true);
