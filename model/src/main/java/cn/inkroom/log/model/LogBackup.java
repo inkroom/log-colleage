@@ -13,8 +13,8 @@ public class LogBackup {
     private Date created;
     private Date start;
     private Date end;
-    private long size;
-    private long length;
+    private long size;//包含日志条数
+    private long length;//文件字节数
 
     public int getId() {
         return id;
