@@ -13,6 +13,7 @@
     <properties>
         <jetty.version>9.4.14.v20181114</jetty.version>
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
+        <vertx.version>3.6.3</vertx.version>
     </properties>
     <artifactId>web</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -35,6 +36,7 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
 
         <!--<dependency>-->
         <!--<groupId>com.fasterxml.jackson.core</groupId>-->
@@ -107,12 +109,28 @@
             <version>2.3.0</version>
         </dependency>
 
-        <!--tcp socket-->
+
+        <!--邮件服务,用于发送邮件-->
         <dependency>
             <groupId>io.vertx</groupId>
-            <artifactId>vertx-core</artifactId>
-            <version>3.6.3</version>
+            <artifactId>vertx-mail-client</artifactId>
+            <version>${vertx.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-stomp</artifactId>
+            <version>${vertx.version}</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <scope>test</scope>
+            <version>1.4.7</version>
+        </dependency>
+
 
         <dependency>
             <groupId>cn.inkroom.log</groupId>
