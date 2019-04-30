@@ -38,6 +38,13 @@
 
     <mvc:resources mapping="/resources/**" location="/WEB-INF/resources/"/>
 
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"  />
+            <mvc:exclude-mapping path="/auth/**"/>
+            <bean class="cn.inkroom.log.web.interceptors.AuthInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 
     <websocket:handlers>

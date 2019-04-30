@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.inkroom.log.web.dao.LoginLogDao">
+
+    <insert id="insertLog">
+        insert into LOGIN_LOG (IP, UA, CREATEDTIME, ACCOUNT) values (#{l.ip},#{l.ua},now(),#{l.account});
+    </insert>
+
+    <select id="selectLog" resultType="cn.inkroom.log.web.bean.LoginLog">
+        select * from LOGIN_LOG order by createdtime desc ;
+    </select>
+</mapper>

@@ -15,6 +15,7 @@
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
         <vertx.version>3.6.3</vertx.version>
     </properties>
+    <packaging>war</packaging>
     <artifactId>web</artifactId>
     <version>1.0-SNAPSHOT</version>
     <description>负责日志文件的查询下载，查看各server的状态</description>

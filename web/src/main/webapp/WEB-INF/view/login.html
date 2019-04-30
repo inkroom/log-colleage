@@ -1,0 +1,77 @@
+<!--
+ created by 墨盒
+ created at 19-2-7
+ -->
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      >
+<head>
+    <title>登录</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+
+<div id="container" style="max-width: 300px;margin:30px auto">
+    <el-form :model="account" status-icon :rules="rule" ref="form" label-width="100px">
+        <el-form-item label="账号" prop="username">
+            <el-input type="password" v-model="account.username" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password" >
+            <el-input type="password" v-model="account.password" @keyup.enter.native="login" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item style="text-align: center">
+            <el-button type="primary" @click="login">提交</el-button>
+        </el-form-item>
+    </el-form>
+</div>
+
+
+    <!-- import Vue before Element -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script type="text/javascript">
+        new Vue({
+            el:'#container',
+            data: {
+                account: {username: '', password: ''}
+                , rule: {
+                    username: [
+                        {required: true, max: 20, min: 1,message:'账号不能为空'}
+                    ],
+                    password: [
+                        {required: true, max: 20, min: 1,message:'密码不能为空'}
+                    ]
+                }
+            },
+            methods: {
+                login() {
+                    this.$refs.form.validate((valid) => {
+                        if (valid) {
+
+                            axios.get('login', {params: this.account}).then(res => {
+                                if (res.data.code === 0) {
+                                    location.href="../index";
+                                } else {
+                                    this.$message('账号或密码错误')
+                                }
+                            })
+
+                        } else {
+                            console.log('error submit!!');
+                            return false;
+                        }
+                    });
+                }
+            },
+        });
+    </script>
+</body>
+</html>
+    
