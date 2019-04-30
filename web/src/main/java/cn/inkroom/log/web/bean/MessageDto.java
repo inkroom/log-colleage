@@ -16,6 +16,9 @@ public class MessageDto<T> {
     public MessageDto() {
     }
 
+    /**
+     * @param code 0 成功，1失败，2参数不合法
+     */
     public MessageDto(int code) {
         this.code = code;
     }
