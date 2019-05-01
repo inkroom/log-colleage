@@ -8,6 +8,7 @@ import cn.inkroom.log.server.dao.LogDao;
 import cn.inkroom.log.server.handler.PropertiesHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ import java.util.concurrent.LinkedBlockingDeque;
  * @date 18-12-10
  */
 @Service
-public class LogMessageService implements MessageListener {
+public class LogMessageService implements MessageListener, InitializingBean {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -31,13 +32,13 @@ public class LogMessageService implements MessageListener {
     //    将日志转化成topic消息
     @Value("${mq.channel.topic.log}")
     private String topicChannel;
-    private MessageSender sender;
-
     @Autowired
-    public LogMessageService(MessageCenter center, MessageSender sender) {
-        this.sender = sender;
-        logger.info("注册 - 日志 - 消息中间件监听，channel={}，类型=queues", PropertiesHandler.getProperty("mq.channel.queue.log"));
-        center.addListener(this, PropertiesHandler.getProperty("mq.channel.queue.log"), false);
+    private MessageSender sender;
+    @Autowired
+    private MessageCenter center;
+
+    public LogMessageService() {
+
     }
 
     @Override
@@ -67,5 +68,15 @@ public class LogMessageService implements MessageListener {
         }
         return true;
 
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        logger.debug("注入的频道={}", topicChannel);
+        logger.debug("注入的dao={}", dao);
+
+//        数据注入完成再启用监听，不能放在构造方法里
+        logger.info("注册 - 日志 - 消息中间件监听，channel={}，类型=queues", PropertiesHandler.getProperty("mq.channel.queue.log"));
+        center.addListener(this, PropertiesHandler.getProperty("mq.channel.queue.log"), false);
     }
 }

@@ -28,25 +28,31 @@
                 type="warning"
                 show-icon>
         </el-alert>
-        <p>
+        <div>
             <span>链接状态:{{ status==1?'连接中':(status==2?'已连接':(status==3?'已断开':'浏览器不支持')) }}</span>
             <!--<el-select v-model="ip" size="small" placeholder="按ip查看">-->
-                <!--<el-option-->
-                        <!--v-for="item in ips"-->
-                        <!--:key="item"-->
-                        <!--:label="item"-->
-                        <!--:value="item">-->
-                <!--</el-option>-->
+            <!--<el-option-->
+            <!--v-for="item in ips"-->
+            <!--:key="item"-->
+            <!--:label="item"-->
+            <!--:value="item">-->
+            <!--</el-option>-->
             <!--</el-select>-->
-            <!--<el-select v-model="tag" size="small" placeholder="按tag查看">-->
-                <!--<el-option-->
-                        <!--v-for="item in tags"-->
-                        <!--:key="item"-->
-                        <!--:label="item"-->
-                        <!--:value="item">-->
-                <!--</el-option>-->
-            <!--</el-select>-->
-        </p>
+        <div>
+            <el-input v-model="ip" style="width:200px;" placeholder="指定ip"></el-input>
+            <el-input v-model="tag" style="width:200px;" placeholder="指定tag"></el-input>
+        </div>
+
+
+        <!--<el-select v-model="tag" size="small" placeholder="按tag查看">-->
+        <!--<el-option-->
+        <!--v-for="item in tags"-->
+        <!--:key="item"-->
+        <!--:label="item"-->
+        <!--:value="item">-->
+        <!--</el-option>-->
+        <!--</el-select>-->
+        </div>
     </div>
     <div class="message-container" ref="content">
         <div v-for="(item,index) in list">
@@ -55,7 +61,7 @@
             <!--<li>ip:{{ item.ip }}-{{ item.msg }}</li>-->
             <!--</ul>-->
             <span style="float: left;margin:auto 3px;">{{ item.line }}&nbsp;&nbsp;</span>
-            <p style="padding-left: 20px;">ip:{{ item.ip }}-{{ item.msg }}</p>
+            <p style="padding-left: 20px;">ip:{{ item.ip }} - tag:{{item.tag}}-{{ item.msg }}</p>
 
         </div>
     </div>
@@ -139,6 +145,15 @@
                 }
                 // vue.logs[data.ip][data.tag].push(data);
 
+
+                if (vue.tag && data.tag !== vue.tag) {
+                    return;
+                }
+
+                if (vue.ip && data.ip !== vue.ip) {
+                    return;
+                }
+
                 if (vue.logs.length > vue.max) {
                     vue.logs.splice(0, 1);
                 }
@@ -146,6 +161,7 @@
                 vue.logs.push(data);
 
                 vue.list.push(data);
+
 
                 // var ele = vue.$refs.content;
                 // ele.scrollTop = ele.scrollHeight;
