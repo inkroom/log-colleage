@@ -3,7 +3,6 @@ package cn.inkroom.log.test.dao;
 import base.BaseTest;
 import cn.inkroom.log.model.LogBackup;
 import cn.inkroom.log.server.dao.h2.BackupDao;
-import cn.inkroom.log.server.server.log.LogService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class LogBackupTest extends BaseTest {
     public void test() throws Exception {
 
         LogBackup file = new LogBackup();
-        file.setPath("/path.log");
+        file.setPath("/home/inkbox/backup/path.log");
         file.setCreated(new Date());
         file.setEnd(new Date());
         file.setStart(new Date());

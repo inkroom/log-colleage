@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -48,7 +49,11 @@ public class InfluxTest extends BaseTest {
     @Test
     public void testQuery() throws Exception {
 
-        List<LogMsg> msg = dao.selectByTime(0, new Date().getTime());
+
+        Date now = new Date();
+        now.setTime(now.getTime() - 3600 * 1000);
+
+        List<LogMsg> msg = dao.selectByTime(now.getTime() - 3600 * 1000, new Date().getTime());
         logger.debug("{}", msg);
         if (!msg.isEmpty()) {
             logger.debug("时间，注意时区={}", msg.get(0).getTime());

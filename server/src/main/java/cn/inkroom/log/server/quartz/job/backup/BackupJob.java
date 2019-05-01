@@ -2,7 +2,7 @@ package cn.inkroom.log.server.quartz.job.backup;
 
 import cn.inkroom.log.model.LogBackup;
 import cn.inkroom.log.server.dao.h2.BackupDao;
-import cn.inkroom.log.server.server.log.LogService;
+import cn.inkroom.log.server.server.BackupService;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ public class BackupJob extends QuartzJobBean {
     @Autowired
     private BackupDao dao;
     @Autowired
-    private LogService service;
+    private BackupService service;
     @Value("${quartz.backup.dir}")
     private String dir;
 
@@ -41,6 +41,7 @@ public class BackupJob extends QuartzJobBean {
                 backup.setStart(backup.getEnd());
             }
             backup.setEnd(new Date());
+            logger.debug("备份开始时间={},结束时间={}",backup.getStart(),backup.getEnd());
             backup.setPath(dir + File.separator + System.currentTimeMillis() + ".log");
 
             int size = service.backup(backup.getStart().getTime(), backup.getEnd().getTime(), backup.getPath());
@@ -48,9 +49,11 @@ public class BackupJob extends QuartzJobBean {
                 backup.setCreated(new Date());
                 backup.setSize(size);
                 backup.setLength(new File(backup.getPath()).length());
+                logger.debug("要备份的记录={}",backup);
                 if (dao.insertFile(backup) != 1) {
                     logger.warn("存储日志文件路径失败，文件信息={}", backup);
                 }
+                //存入备份记录
             }
 
         } catch (Exception e) {

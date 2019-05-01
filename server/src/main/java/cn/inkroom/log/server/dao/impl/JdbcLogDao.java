@@ -67,7 +67,7 @@ public class JdbcLogDao implements LogDao {
             for (List<Object> value : values) {
                 LogMsg msg = new LogMsg();
                 int i = 0;
-                logger.debug("value={}", value);
+//                logger.debug("value={}", value);
                 //本身时间是一个double类型
                 msg.setTime(new Date(((Double) value.get(i++)).longValue()));
 //                logger.debug("class={},time={}", value.get(i).getClass(), value.get(i++).toString());
