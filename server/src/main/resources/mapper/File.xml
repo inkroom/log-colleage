@@ -19,11 +19,11 @@
     </insert>
 
   <select id="selectLast" resultType="cn.inkroom.log.model.LogBackup">
-    select * from backup order  by created limit 1
+    select * from backup order  by created desc limit 1
   </select>
 
   <select id="selectAll" resultType="cn.inkroom.log.model.LogBackup">
-    select * from backup order  by created
+    select * from backup order  by created desc
   </select>
 
 </mapper>
