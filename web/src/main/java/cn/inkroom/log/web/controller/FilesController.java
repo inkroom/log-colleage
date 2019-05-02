@@ -1,7 +1,10 @@
 package cn.inkroom.log.web.controller;
 
 import cn.inkroom.log.model.LogBackup;
+import cn.inkroom.log.web.bean.DownloadLog;
 import cn.inkroom.log.web.bean.MessageDto;
+import cn.inkroom.log.web.config.Asserts;
+import cn.inkroom.log.web.service.DownloadLogService;
 import cn.inkroom.log.web.service.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +22,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author 墨盒
@@ -36,6 +42,8 @@ public class FilesController {
     private HttpServletResponse response;
     @Autowired
     private FileService fileService;
+    @Autowired
+    private DownloadLogService downloadLogService;
 
     @RequestMapping("files")
     public String index() throws RuntimeException {
@@ -59,6 +67,17 @@ public class FilesController {
 
     }
 
+    public static void main(String[] args) {
+        Pattern pattern=Pattern.compile("/1556702100005.log$");
+        Matcher matcher = pattern.matcher("/home/inkbox/backup/1556702100005.log");
+        System.out.println(matcher.find());
+
+        System.out.println("/1556702100005.log$".replace(".","\\."));
+
+        System.out.println("/home/inkbox/backup/1556702100005.log".matches("1556702100005.log"));
+    }
+
+
     @RequestMapping("download")
     @ResponseBody
     public void download(String name, String ip) throws IOException {
@@ -72,6 +91,26 @@ public class FilesController {
         if (inputStream == null) {
             response.sendError(404);
         }
+
+        List<LogBackup> backups = fileService.list(ip);
+
+        Pattern pattern = Pattern.compile("/"+name.replace(".","\\.")+"$");
+        for (LogBackup backup : backups) {
+            if (pattern.matcher(backup.getPath()).find()) {
+                DownloadLog log = new DownloadLog();
+                log.setFile(name);
+                log.setUsername(request.getSession().getAttribute(Asserts.AUTH_SESSION_KEY).toString());
+                log.setStart(backup.getStart());
+                log.setEnd(backup.getEnd());
+                log.setSize(backup.getSize());
+
+                downloadLogService.insertLog(log);
+
+                break;
+            }
+        }
+
+
         response.addHeader("Content-Disposition", "attachment;filename=" + new String((ip + "_" + name).getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
 
 

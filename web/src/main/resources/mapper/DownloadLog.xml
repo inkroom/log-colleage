@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.inkroom.log.web.dao.DownloadLogDao">
+
+    <insert id="insertLog">
+        insert into DOWNLOAD ( username, file, start, end, created_at, size )
+         values (#{d.username},#{d.file},#{d.start},#{d.end},now(),#{d.size});
+    </insert>
+
+    <select id="selectLog" resultType="cn.inkroom.log.web.bean.DownloadLog">
+        select * from DOWNLOAD order by CREATED_AT desc ;
+    </select>
+</mapper>
