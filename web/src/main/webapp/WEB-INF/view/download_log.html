@@ -10,7 +10,7 @@
       layout:decorate="common/_layout">
 
 <head>
-    <title>登录日志</title>
+    <title>下载记录</title>
     <style>
         .message-container {
             overflow-y: scroll;
@@ -24,7 +24,7 @@
 <th:block layout:fragment="content">
     <ul>
         <li v-for="(item,i) in list" :key="i">
-            用户：{{item.account}} ip：{{item.ip}} 浏览器：{{item.ua}} 登录时间：{{item.createdTime | time}}
+            用户：{{item.account}} 文件：{{item.file}} 日志条数：{{ item.size }} 日志开始时间：{{item.start | time}} 日志结束时间：{{item.end | time}} 下载时间：{{ item.createdAt | time  }}
         </li>
     </ul>
 </th:block>
