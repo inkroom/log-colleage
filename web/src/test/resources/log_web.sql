@@ -84,3 +84,41 @@ comment on column alarm.ip is 'ip';
 comment on column alarm.created_at is '下载时间';
 
 
+create table if not exists Downtime
+(
+    id         int auto_increment,
+    tag        varchar(100),
+    ip         varchar(30),
+    created_at timestamp,
+    status     int
+);
+
+comment on table Downtime is '宕机记录';
+
+comment on column Downtime.tag is 'tag';
+comment on column Downtime.ip is 'ip';
+comment on column Downtime.created_at is '宕机时间';
+
+
+
+create table if not exists statistics
+(
+    id         int auto_increment,
+    tag        varchar(100),
+    ip         varchar(30),
+    count      int,
+    created_at timestamp,
+    level int ,
+    status     int
+);
+
+comment on table statistics is '数据统计';
+
+comment on column statistics.tag is 'tag';
+comment on column statistics.ip is 'ip';
+comment on column statistics.count is '日志条数';
+comment on column statistics.level is '日志级别，debug这些';
+comment on column statistics.created_at is '记录时间';
+
+
+
