@@ -1,9 +1,17 @@
 package cn.inkroom.log.web.service;
 
+import cn.inkroom.log.model.LogMsg;
 import cn.inkroom.log.mq.MessageCenter;
 import cn.inkroom.log.mq.MessageListener;
+import cn.inkroom.log.web.alert.MessageAlert;
+import cn.inkroom.log.web.alert.MessageAlertFactory;
+import cn.inkroom.log.web.check.CheckLog;
+import cn.inkroom.log.web.check.CheckLogFactory;
+import cn.inkroom.log.web.handler.PropertiesHandler;
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,7 +20,6 @@ import org.springframework.web.socket.*;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * 日志服务，用于实时日志
@@ -21,7 +28,7 @@ import java.util.function.Consumer;
  * @date 19-2-10
  */
 @Service
-public class LogServer implements MessageListener, WebSocketHandler {
+public class LogServer implements MessageListener, WebSocketHandler, InitializingBean {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -31,6 +38,7 @@ public class LogServer implements MessageListener, WebSocketHandler {
     @Value("${mq.channel.topic.log}")
     private String channel;
 
+
     public LogServer() {
         socketSessions = new LinkedList<>();
     }
@@ -38,6 +46,8 @@ public class LogServer implements MessageListener, WebSocketHandler {
     @Override
     public boolean onMessage(String message, String channel) {
         logger.debug("收到日志消息={}", message);
+
+
         //发送日志
         socketSessions.forEach(webSocketSession -> {
             WebSocketMessage<String> socketMessage = new TextMessage(message);
@@ -88,5 +98,11 @@ public class LogServer implements MessageListener, WebSocketHandler {
     @Override
     public boolean supportsPartialMessages() {
         return false;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+
+
     }
 }
