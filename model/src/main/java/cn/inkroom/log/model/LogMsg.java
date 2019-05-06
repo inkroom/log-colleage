@@ -18,6 +18,16 @@ public class LogMsg {
     private String tag;
     private String msg;
 
+    private int level;//从0开始，debug最高
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     @Override
     public String toString() {
         return JSON.toJSONString(this);

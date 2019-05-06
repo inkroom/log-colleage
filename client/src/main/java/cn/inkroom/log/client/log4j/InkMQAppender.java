@@ -132,6 +132,7 @@ public class InkMQAppender extends AppenderSkeleton {
         logMsg.setTime(new Date(event.getTimeStamp()));
         logMsg.setIp(localIp);
         logMsg.setTag(tag);
+        logMsg.setLevel(event.getLevel().toInt());
         return logMsg;
     }
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.inkroom.log.web.dao.AlarmDao">
+
+    <insert id="insertLog">
+        insert into ALARM(message, tag, ip, created_at, status)
+         values (#{a.message},#{a.tag},#{a.ip},#{a.createdAt},#{a.status})
+    </insert>
+
+    <select id="selectAlarm" resultType="cn.inkroom.log.web.bean.Alarm">
+        select * from ALARM order by CREATED_AT desc ;
+    </select>
+</mapper>
