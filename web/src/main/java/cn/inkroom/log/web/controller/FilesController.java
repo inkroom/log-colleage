@@ -67,15 +67,6 @@ public class FilesController {
 
     }
 
-    public static void main(String[] args) {
-        Pattern pattern=Pattern.compile("/1556702100005.log$");
-        Matcher matcher = pattern.matcher("/home/inkbox/backup/1556702100005.log");
-        System.out.println(matcher.find());
-
-        System.out.println("/1556702100005.log$".replace(".","\\."));
-
-        System.out.println("/home/inkbox/backup/1556702100005.log".matches("1556702100005.log"));
-    }
 
 
     @RequestMapping("download")
