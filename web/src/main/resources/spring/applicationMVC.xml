@@ -48,6 +48,6 @@
 
 
     <websocket:handlers>
-        <websocket:mapping path="/actualLog" handler="logServer" />
+        <websocket:mapping path="/actualLog" handler="socketLogServer" />
     </websocket:handlers>
 </beans>

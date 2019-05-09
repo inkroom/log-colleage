@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.inkroom.log.web.dao.StatisticsDao">
+
+    <update id="update">
+        update STATISTICS set count = count + #{count} where tag=#{tag} and ip = #{ip} and level=#{level}
+    </update>
+
+    <insert id="insert" parameterType="cn.inkroom.log.web.bean.Statistics">
+        insert into STATISTICS ( tag, ip, count, created_at, level, status)
+         values (#{s.tag},#{s.ip},#{s.count},now(),#{s.level},1)
+    </insert>
+
+    <select id="select" resultType="cn.inkroom.log.web.bean.Statistics">
+        select * from STATISTICS
+        where 1=1
+        <if test="tag != null">
+            and tag = #{tag}
+        </if>
+        <if test="ip != null">
+            and ip = #{ip}
+        </if>
+        <if test="level != -1">
+            and level = #{level}
+        </if>
+    </select>
+    <select id="selectTags" resultType="java.lang.String">
+        select distinct tag from STATISTICS;
+    </select>
+
+
+    <select id="selectIP" resultType="java.lang.String">
+        select distinct IP from STATISTICS;
+    </select>
+</mapper>

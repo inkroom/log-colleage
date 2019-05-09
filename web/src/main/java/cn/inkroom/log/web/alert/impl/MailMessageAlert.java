@@ -5,6 +5,8 @@ import org.simplejavamail.email.Email;
 import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.Mailer;
 import org.simplejavamail.mailer.MailerBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 import java.util.function.BiConsumer;
@@ -15,6 +17,7 @@ import java.util.function.BiConsumer;
  */
 public class MailMessageAlert implements MessageAlert {
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
     private String from;
     private String to;
     private String smtp;
@@ -24,6 +27,8 @@ public class MailMessageAlert implements MessageAlert {
 
     @Override
     public void init(Properties properties) {
+
+        logger.debug("生成邮件报警通知={}", properties);
 
         //TODO 优化参数注入方式
         properties.forEach((key, value) -> {
@@ -54,11 +59,13 @@ public class MailMessageAlert implements MessageAlert {
     public boolean alert(String message) {
         Email email = EmailBuilder.startingBlank().from(from)
                 .to(to)
-                .withPlainText(message)
+                .withSubject("墨盒日志系统")
+                .withHTMLText(message)
                 .buildEmail();
 
         //TODO 待修复无法获取发送结果问题
         mailer.sendMail(email);
+        logger.debug("发送邮件成功");
         return true;
     }
 }

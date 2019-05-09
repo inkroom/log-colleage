@@ -1,4 +1,4 @@
-package cn.inkroom.log.web.service;
+package cn.inkroom.log.web.service.log.impl;
 
 import cn.inkroom.log.model.LogMsg;
 import cn.inkroom.log.mq.MessageCenter;
@@ -9,6 +9,8 @@ import cn.inkroom.log.web.bean.Alarm;
 import cn.inkroom.log.web.check.CheckLog;
 import cn.inkroom.log.web.check.CheckLogFactory;
 import cn.inkroom.log.web.handler.PropertiesHandler;
+import cn.inkroom.log.web.service.AlarmService;
+import cn.inkroom.log.web.service.log.AbstractLogReceiverService;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +26,7 @@ import java.util.Date;
  * @date 19-5-6
  */
 @Service
-public class CheckLogService implements MessageListener, InitializingBean {
-
-    private Logger logger = LoggerFactory.getLogger(getClass());
-
-    @Autowired
-    private MessageCenter center;
-    @Value("${mq.channel.topic.log}")
-    private String channel;
+public class CheckLogService extends AbstractLogReceiverService {
 
     @Autowired
     private AlarmService service;
@@ -69,7 +64,6 @@ public class CheckLogService implements MessageListener, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-
         this.checkLog = CheckLogFactory.create(PropertiesHandler.getProperties());
         if (this.checkLog instanceof MessageAlert) {//允许 checkLog实现消息发送功能
             this.alert = ((MessageAlert) this.checkLog);
@@ -77,7 +71,7 @@ public class CheckLogService implements MessageListener, InitializingBean {
             this.alert = MessageAlertFactory.create(PropertiesHandler.getProperties());
 
         if (this.checkLog != null) {//只有配置了检测的才监听queue
-            center.addListener(this, channel, true);
+            super.afterPropertiesSet();
             if (this.alert == null) {
                 logger.warn("没有配置报警方式，将无法正常接收报警信息");
             }

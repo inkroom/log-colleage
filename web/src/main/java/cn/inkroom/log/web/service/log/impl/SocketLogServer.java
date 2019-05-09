@@ -1,19 +1,6 @@
-package cn.inkroom.log.web.service;
+package cn.inkroom.log.web.service.log.impl;
 
-import cn.inkroom.log.model.LogMsg;
-import cn.inkroom.log.mq.MessageCenter;
-import cn.inkroom.log.mq.MessageListener;
-import cn.inkroom.log.web.alert.MessageAlert;
-import cn.inkroom.log.web.alert.MessageAlertFactory;
-import cn.inkroom.log.web.check.CheckLog;
-import cn.inkroom.log.web.check.CheckLogFactory;
-import cn.inkroom.log.web.handler.PropertiesHandler;
-import com.alibaba.fastjson.JSON;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import cn.inkroom.log.web.service.log.AbstractLogReceiverService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.*;
 
@@ -28,18 +15,13 @@ import java.util.List;
  * @date 19-2-10
  */
 @Service
-public class LogServer implements MessageListener, WebSocketHandler, InitializingBean {
+public class SocketLogServer extends AbstractLogReceiverService implements WebSocketHandler {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
 
     private List<WebSocketSession> socketSessions;
-    @Autowired
-    private MessageCenter center;
-    @Value("${mq.channel.topic.log}")
-    private String channel;
 
 
-    public LogServer() {
+    public SocketLogServer() {
         socketSessions = new LinkedList<>();
     }
 
@@ -65,8 +47,9 @@ public class LogServer implements MessageListener, WebSocketHandler, Initializin
         logger.debug("socket 链接");
         socketSessions.add(webSocketSession);
         if (socketSessions.size() == 1) {//第一个socket链接，此时才订阅频道
-            logger.info("注册日志发送频道,channel={},type=topic", channel);
-            center.addListener(this, channel, true);
+            bind();
+//            logger.info("注册日志发送频道,channel={},type=topic", channel);
+//            center.addListener(this, channel, true);
 
         }
     }
@@ -82,7 +65,8 @@ public class LogServer implements MessageListener, WebSocketHandler, Initializin
         webSocketSession.close();
         socketSessions.remove(webSocketSession);
         if (socketSessions.size() == 0) {//没有人关心，此时移除订阅
-            center.removeListener(this, channel);
+            unbind();
+//            center.removeListener(this, channel);
         }
     }
 
@@ -91,7 +75,8 @@ public class LogServer implements MessageListener, WebSocketHandler, Initializin
         logger.debug("socket 关闭");
         socketSessions.remove(webSocketSession);
         if (socketSessions.size() == 0) {//没有人关心，此时移除订阅
-            center.removeListener(this, channel);
+            unbind();
+//            center.removeListener(this, channel);
         }
     }
 
