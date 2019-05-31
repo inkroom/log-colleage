@@ -10,6 +10,17 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
+    <mvc:annotation-driven conversion-service="conversionService"/>
+
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="cn.inkroom.log.web.handler.DateConverter"/>
+            </set>
+        </property>
+    </bean>
+
+
     <bean id="templateResolver"
           class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
         <property name="prefix" value="/WEB-INF/view/"/>
@@ -33,14 +44,12 @@
         <property name="templateEngine" ref="templateEngine"/>
         <property name="characterEncoding" value="UTF-8"/>
     </bean>
-    <!-- 启动Springmvc注解驱动 -->
-    <mvc:annotation-driven/> <!-- 自动将控制器加载到bean -->
 
     <mvc:resources mapping="/resources/**" location="/WEB-INF/resources/"/>
 
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/**"  />
+            <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/auth/**"/>
             <bean class="cn.inkroom.log.web.interceptors.AuthInterceptor"/>
         </mvc:interceptor>
@@ -48,6 +57,6 @@
 
 
     <websocket:handlers>
-        <websocket:mapping path="/actualLog" handler="socketLogServer" />
+        <websocket:mapping path="/actualLog" handler="socketLogServer"/>
     </websocket:handlers>
 </beans>

@@ -37,6 +37,7 @@
         </el-select>
 
         <el-date-picker
+                @change="filter"
                 v-model="start"
                 type="datetime"
                 format="yyyy-MM-dd HH:mm"
@@ -44,6 +45,7 @@
                 placeholder="开始时间">
         </el-date-picker>
         <el-date-picker
+                @change="filter"
                 v-model="end"
                 type="datetime"
                 format="yyyy-MM-dd HH:mm"
@@ -66,8 +68,8 @@
                 level: -1,
                 list: [],
                 all: [],
-                start:'',
-                end:''
+                start: '',
+                end: ''
             },
             filters: {
                 time(value) {
@@ -91,7 +93,16 @@
             methods: {
                 filter() {
                     let _this = this;
-                    axios.post('',{tag:_this.tag,ip:_this.ip,start:_this.start,end:_this.end}).then(function (res) {
+                    axios({
+                        method: 'post',
+                        url: '',
+                        params: {
+                            tag: _this.tag,
+                            ip: _this.ip,
+                            start: _this.start,
+                            end: _this.end
+                        }
+                    }).then(function (res) {
                         if (res.data.code === 0) {
                             _this.list = res.data.data;
                             // _this.all = this.list;
