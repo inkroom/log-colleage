@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,13 +45,13 @@ public class StatisticsController {
 
     @PostMapping("statistics")
     @ResponseBody
-    public MessageDto<List<Statistics>> list(String tag, String ip, @RequestParam(defaultValue = "-1") int level) {
+    public MessageDto<List<Statistics>> list(String tag, String ip, @RequestParam(defaultValue = "-1") int level, Date start, Date end) {
 
         //处理可能存在的空字符
         tag = StringUtils.isEmpty(tag) ? null : tag;
         ip = StringUtils.isEmpty(ip) ? null : ip;
 
-        List<Statistics> loginLogs = service.list(tag, ip, level, 1, 10);
+        List<Statistics> loginLogs = service.list(tag, ip, level,start,end, 1, 10);
         if (loginLogs == null) return new MessageDto<>(1);
         return new MessageDto<>(0, loginLogs);
     }
