@@ -5,7 +5,19 @@
 <mapper namespace="cn.inkroom.log.web.dao.StatisticsDao">
 
     <update id="update">
-        update STATISTICS set count = count + #{count} where tag=#{tag} and ip = #{ip} and level=#{level}
+        update STATISTICS set count = count + #{count} where 1= 1
+        <if test="tag != null">
+            and tag = #{tag}
+        </if>
+        <if test="ip != null">
+            and ip = #{ip}
+        </if>
+        <if test="level != -1">
+            and level = #{level}
+        </if>
+        <if test="id != -1">
+            and id = #{id}
+        </if>
     </update>
 
     <insert id="insert" parameterType="cn.inkroom.log.web.bean.Statistics">
@@ -25,6 +37,12 @@
         <if test="level != -1">
             and level = #{level}
         </if>
+        <if test="start != end">
+            and created_at >= #{start}
+        </if>
+        <if test="end != end">
+            and #{end} >= created_at
+        </if>
     </select>
     <select id="selectTags" resultType="java.lang.String">
         select distinct tag from STATISTICS;
@@ -33,5 +51,19 @@
 
     <select id="selectIP" resultType="java.lang.String">
         select distinct IP from STATISTICS;
+    </select>
+    <select id="selectLast">
+        select * from STATISTICS where
+        where 1=1
+        <if test="tag != null">
+            and tag = #{tag}
+        </if>
+        <if test="ip != null">
+            and ip = #{ip}
+        </if>
+        <if test="level != -1">
+            and level = #{level}
+        </if>
+        order by created_at
     </select>
 </mapper>

@@ -24,13 +24,32 @@
 <th:block layout:fragment="content">
     <div>
         <el-select v-model="tag" placeholder="tag" @change="filter">
+            <el-option label="所有" value="">
+            </el-option>
             <el-option th:each="tag : ${tags}" th:label="${tag}" th:value="${tag}">
             </el-option>
         </el-select>
         <el-select v-model="ip" placeholder="ip" @change="filter">
+            <el-option label="所有" value="">
+            </el-option>
             <el-option th:each="ip : ${ips}" th:label="${ip}" th:value="${ip}">
             </el-option>
         </el-select>
+
+        <el-date-picker
+                v-model="start"
+                type="datetime"
+                format="yyyy-MM-dd HH:mm"
+                value-format="yyyy-MM-dd HH:mm"
+                placeholder="开始时间">
+        </el-date-picker>
+        <el-date-picker
+                v-model="end"
+                type="datetime"
+                format="yyyy-MM-dd HH:mm"
+                value-format="yyyy-MM-dd HH:mm"
+                placeholder="结束">
+        </el-date-picker>
     </div>
     <ul>
         <li v-for="(item,i) in list" :key="i">
@@ -46,7 +65,9 @@
                 ip: '',
                 level: -1,
                 list: [],
-                all: []
+                all: [],
+                start:'',
+                end:''
             },
             filters: {
                 time(value) {
@@ -59,29 +80,23 @@
                 }
             },
             created() {
-                axios.post('').then(res => {
-                    if (res.data.code === 0) {
-                        this.list = res.data.data;
-                        this.all = this.list;
-                    }
-                })
+                // let _this = this;
+                // axios.post('').then(function (res) {
+                //     if (res.data.code === 0) {
+                //         _this.list = res.data.data;
+                //         _this.all = this.list;
+                //     }
+                // })
             },
             methods: {
                 filter() {
-                    console.log((this.all))
-                    this.list = this.all.slice();
-                    console.log((this.list))
-                    for (let i = this.list.length - 1; i >= 0; i--) {
-                        console.log(this.list[i].tag);
-                        if (this.tag && this.list[i].tag !== this.tag) {
-                            this.list.splice(i, 1);
-                            continue;
+                    let _this = this;
+                    axios.post('',{tag:_this.tag,ip:_this.ip,start:_this.start,end:_this.end}).then(function (res) {
+                        if (res.data.code === 0) {
+                            _this.list = res.data.data;
+                            // _this.all = this.list;
                         }
-                        if (this.ip && this.list[i].ip !== this.ip) {
-                            this.list.splice(i, 1);
-                            continue;
-                        }
-                    }
+                    })
                 }
             }
         }

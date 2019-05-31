@@ -8,11 +8,20 @@ import java.util.Date;
  */
 public class Statistics {
 
+    private int id;
     private String tag;
     private String ip;
     private int count;
     private int level;
     private Date createdAt;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTag() {
         return tag;
