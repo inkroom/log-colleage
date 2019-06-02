@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.inkroom.log.web.dao.DownTimeDao">
+
+
+    <select id="selectDown" resultType="cn.inkroom.log.web.bean.Alarm">
+        select * from DOWNTIME
+        where 1=1
+        <if test="ip != null">
+            and ip = #{ip}
+        </if>
+
+        <if test="tag != null">
+            and tag = #{tag}
+        </if>
+        <if test="time != null">
+            and created_at  = #{time}
+        </if>
+        order by CREATED_AT desc ;
+    </select>
+
+    <insert id="insertDown">
+        insert into DOWNTIME (TAG, IP, CREATED_AT, STATUS)
+         values (#{tag},#{ip},#{time},1)
+    </insert>
+</mapper>

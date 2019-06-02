@@ -1,0 +1,62 @@
+<!--
+实时日志
+ created by 墨盒
+ created at 19-2-10
+ -->
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="common/_layout">
+
+<head>
+    <title>宕机记录</title>
+    <style>
+        .message-container {
+            overflow-y: scroll;
+            height: 500px;
+            border: black 1px solid;
+        }
+    </style>
+</head>
+
+<body>
+<th:block layout:fragment="content">
+    <ul>
+        <li v-for="(item,i) in list" :key="i">
+            ip：{{item.ip}} 宕机时间：{{item.createdAt | time}}
+        </li>
+    </ul>
+</th:block>
+<th:block layout:fragment="script">
+    <script type="text/javascript">
+        var vue_data = {
+            data: {
+                list: [],
+            },
+            filters: {
+                time(value) {
+                    var date = new Date(value);
+                    return date.getFullYear() + '-'
+                        + (date.getMonth() < 9 ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1))
+                        + "-" + (date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate())
+                        + " " + (date.getHours() < 10 ? ('0' + date.getHours()) : date.getHours())
+                        + ":" + (date.getMinutes() < 10 ? ('0' + date.getMinutes()) : date.getMinutes())
+                }
+            },
+            created() {
+                axios.post('').then(res => {
+                    if (res.data.code === 0) {
+                        this.list = res.data.data;
+                    }
+                })
+            }
+        }
+
+
+    </script>
+</th:block>
+</body>
+
+</html>
+    

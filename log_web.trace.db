@@ -1,9 +1,0 @@
-2019-05-31 15:34:03 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLException: Table "LOGIN_LOG" not found; SQL statement:
-insert into LOGIN_LOG (IP, UA, CREATEDTIME, ACCOUNT) values (?,?,now(),?); [42102-192]
-2019-05-31 15:34:17 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLException: Table "LOGIN_LOG" not found; SQL statement:
-insert into LOGIN_LOG (IP, UA, CREATEDTIME, ACCOUNT) values (?,?,now(),?); [42102-192]
-2019-05-31 15:34:24 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLException: Table "LOGIN_LOG" not found; SQL statement:
-insert into LOGIN_LOG (IP, UA, CREATEDTIME, ACCOUNT) values (?,?,now(),?); [42102-192]
