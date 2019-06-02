@@ -22,11 +22,37 @@
 
 <body>
 <th:block layout:fragment="content">
-    <ul>
-        <li v-for="(item,i) in list" :key="i">
-            用户：{{item.account}} 文件：{{item.file}} 日志条数：{{ item.size }} 日志开始时间：{{item.start | time}} 日志结束时间：{{item.end | time}} 下载时间：{{ item.createdAt | time  }}
-        </li>
-    </ul>
+    <el-row v-for=" n in Math.ceil( list.length / 3)">
+        <el-col :span="6" :offset="index % 3 ==0 ? 2:1"
+                v-for=" (item,index ) in list.slice( (n -1) * 3, (n)*3 ) ">
+            <el-card>
+                <p>
+                    <span>用户: {{item.account || 'admin'}}</span>
+                </p>
+                <p>
+                    <span>文件: {{ item.file }}</span>
+                </p>
+                <p>
+                    <span>日志条数: {{  item.size }}</span>
+                </p>
+                <p>
+                    <span>日志开始时间：{{item.start | time}}</span>
+                </p>
+                <p><span>
+                     日志结束时间：{{item.end | time}}
+                </span></p>
+                <p><span>
+                     下载时间：{{ item.createdAt | time  }}
+                </span></p>
+            </el-card>
+        </el-col>
+    </el-row>
+<!--    <ul>-->
+<!--        <li v-for="(item,i) in list" :key="i">-->
+<!--            用户：{{item.account}} 文件：{{item.file}} 日志条数：{{ item.size }} 日志开始时间：{{item.start | time}} 日志结束时间：{{item.end |-->
+<!--            time}} 下载时间：{{ item.createdAt | time }}-->
+<!--        </li>-->
+<!--    </ul>-->
 </th:block>
 <th:block layout:fragment="script">
     <script type="text/javascript">
