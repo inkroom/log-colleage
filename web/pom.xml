@@ -11,7 +11,7 @@
         <!--<relativePath/>-->
     </parent>
     <properties>
-        <jetty.version>9.4.14.v20181114</jetty.version>
+        <jetty.version>9.4.17.v20190418</jetty.version>
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
         <vertx.version>3.6.3</vertx.version>
     </properties>
