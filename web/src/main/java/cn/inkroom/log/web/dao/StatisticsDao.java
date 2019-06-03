@@ -21,7 +21,7 @@ public interface StatisticsDao {
      * @param level level
      * @return
      */
-    Statistics selectLast(String tag, String ip, int level);
+    Statistics selectLast(@Param("tag") String tag,@Param("ip") String ip,@Param("level") int level);
 
     /**
      * 更新数据
