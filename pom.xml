@@ -11,6 +11,7 @@
     <packaging>pom</packaging>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>5.1.2.RELEASE</spring.version>
         <spring.group>org.springframework</spring.group>
     </properties>
@@ -112,4 +113,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

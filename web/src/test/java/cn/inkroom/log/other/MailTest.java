@@ -5,6 +5,7 @@ import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.ext.mail.*;
 import io.vertx.ext.stomp.*;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ import java.util.Properties;
  * @author 墨盒
  * @date 19-2-23
  */
+@Ignore
 public class MailTest {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -105,6 +107,7 @@ public class MailTest {
 
     }
     @Test
+    @Ignore
     public void testFast() throws Exception{
         // DNS服务器，看看本机的DNS配置
         String dns = "dns://8.8.8.8";

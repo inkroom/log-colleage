@@ -52,8 +52,8 @@
     <select id="selectIP" resultType="java.lang.String">
         select distinct IP from STATISTICS;
     </select>
-    <select id="selectLast">
-        select * from STATISTICS where
+    <select id="selectLast" resultType="cn.inkroom.log.web.bean.Statistics">
+        select * from STATISTICS
         where 1=1
         <if test="tag != null">
             and tag = #{tag}
