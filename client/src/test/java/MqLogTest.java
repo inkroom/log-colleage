@@ -31,10 +31,9 @@ public class MqLogTest {
                 "(1) 前后端隔离，", "系统间模块的耦合度系统间模块的耦合度系统间模块的耦合度系统间模块的耦合度系统间模块的耦合度系统间模块的耦合度系统间模块的耦合度系统间模块的耦合度系统间模块的耦合度系统间模块的耦合度系统间模块的耦合度，解耦 ", "深入浅出Redis-redis哨兵集群", "博主，可否做一个实际带java调用你这个ActiveMQ消息队列例子。谢谢……", "楼主，求你Java部分一整块Demo。邮箱：1146135461@qq.com"};
         MockConfig mockConfig = new MockConfig()
                 // 随机段落字符串
-                .stringRegex("I'我们就不需要在获取dom节点了bble adf博页就不卡了，我觉得是在扯淡，访问的情eresdjyuilon对 71.6M的 jsonhfasawthe ch静态爬虫就tcp://192.1无法爬取动态生成的页, like：[a-z]{2}-[0-9]{2}-[abc123]{2}-\\w{2}-\\d{2}@\\s{1}-\\S{1}\\.?-.");
+                .stringRegex("\\u4e00-\\u9fa5_a-zA-Z0-9]{3}dom节的页, like：[a-z]{2}-[0-9]{2}-[abc123]{2}-\\w{2}-\\d{2}@\\s{1}-\\S{1}\\.?-.");
 
         for (int i = 0; i < 10; i++) {
-
 
             logger.info(JMockData.mock(String.class));
         }
