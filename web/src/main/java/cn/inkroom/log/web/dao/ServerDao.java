@@ -14,7 +14,7 @@ public interface ServerDao {
      * 根据ip查找对应数据
      *
      * @param ip ip
-     * @return server
+     * @return service
      * @throws Exception 异常
      */
     Server selectServerByIp(@Param("ip") String ip) throws Exception;
@@ -22,7 +22,7 @@ public interface ServerDao {
     /**
      * 获取所有server
      *
-     * @return server
+     * @return service
      * @throws Exception 数据库异常
      */
     List<Server> selectServer() throws Exception;
@@ -39,7 +39,7 @@ public interface ServerDao {
     /**
      * 添加server
      *
-     * @param server server
+     * @param server service
      * @return 受影响行数
      * @throws Exception 异常
      */

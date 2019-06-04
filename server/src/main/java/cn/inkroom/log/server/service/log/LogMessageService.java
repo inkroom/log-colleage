@@ -1,4 +1,4 @@
-package cn.inkroom.log.server.server.log;
+package cn.inkroom.log.server.service.log;
 
 import cn.inkroom.log.model.LogMsg;
 import cn.inkroom.log.mq.MessageCenter;
@@ -12,9 +12,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * 负责接收日志消息

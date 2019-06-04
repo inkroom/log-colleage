@@ -2,7 +2,7 @@ package cn.inkroom.log.server.quartz.job.backup;
 
 import cn.inkroom.log.model.LogBackup;
 import cn.inkroom.log.server.dao.h2.BackupDao;
-import cn.inkroom.log.server.server.BackupService;
+import cn.inkroom.log.server.service.BackupService;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;

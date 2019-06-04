@@ -5,7 +5,7 @@
         <!--<encoder>-->
             <!--&lt;!&ndash;<pattern>%d %p (%file:%line\)- %m%n</pattern>&ndash;&gt;-->
             <!--&lt;!&ndash;格式化输出：%d:表示日期    %thread:表示线程名     %-5level:级别从左显示5个字符宽度  %msg:日志消息    %n:是换行符&ndash;&gt;-->
-            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss}-server-[%thread] %-5level %logger - %msg%n</pattern>-->
+            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss}-service-[%thread] %-5level %logger - %msg%n</pattern>-->
             <!--<charset>UTF8</charset>-->
         <!--</encoder>-->
     <!--</appender>-->

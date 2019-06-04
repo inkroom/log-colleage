@@ -21,7 +21,7 @@ comment on column backup.length is '文件字节数';
 --
 --
 -- )
--- create table server
+-- create table service
 -- (
 -- 	ip varchar(30) not null,
 -- 	run long not null,
@@ -32,13 +32,13 @@ comment on column backup.length is '文件字节数';
 -- 		primary key (ip)
 -- );
 --
--- comment on table server is 'server端状态信息';
+-- comment on table service is 'server端状态信息';
 --
--- comment on column server.run is '运行时长，单位毫秒';
+-- comment on column service.run is '运行时长，单位毫秒';
 --
--- comment on column server.status is '是否运行中';
+-- comment on column service.status is '是否运行中';
 --
--- comment on column server.file_port is '文件下载端口';
+-- comment on column service.file_port is '文件下载端口';
 --
--- comment on column server.last is '上次通信时间';
+-- comment on column service.last is '上次通信时间';
 

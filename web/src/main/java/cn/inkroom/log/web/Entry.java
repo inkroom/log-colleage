@@ -31,14 +31,14 @@ public class Entry {
 //        queuedThreadPool.setName("queuedTreadPool");
 //        queuedThreadPool.setMinThreads(10);
 //        queuedThreadPool.setMaxThreads(200);
-//        server.setThreadPool(queuedThreadPool);
+//        service.setThreadPool(queuedThreadPool);
 //        // 添加Connector
 //        SelectChannelConnector connector = new SelectChannelConnector();
 //        connector.setPort(port);
 //        connector.setAcceptors(4);// 同时监听read事件的线程数
 //        connector.setMaxBuffers(2048);
 //        connector.setMaxIdleTime(10000);
-//        server.addConnector(connector);
+//        service.addConnector(connector);
 
         WebAppContext webContext = new WebAppContext(DEFAULT_WEBAPP_PATH, CONTEXT);
         webContext.setDescriptor(DEFAULT_WEBAPP_PATH + "/WEB-INF/web.xml");
@@ -55,6 +55,6 @@ public class Entry {
         Server server = createServerIn(PORT);
         server.stop();
         server.start();
-//        server.join();
+//        service.join();
     }
 }

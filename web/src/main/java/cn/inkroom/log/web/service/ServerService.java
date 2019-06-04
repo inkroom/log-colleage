@@ -73,7 +73,7 @@ public class ServerService implements MessageListener {
                         count = dao.updateServer(server);
                     }
                     if (count != 1) {
-                        logger.warn("server状态更新失败，server={}", server);
+                        logger.warn("server状态更新失败，service={}", server);
                     }
                 } catch (Exception e) {
                     logger.warn("server状态更新失败,", e);

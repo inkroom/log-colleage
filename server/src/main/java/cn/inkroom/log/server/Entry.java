@@ -50,9 +50,9 @@ public class Entry {
 
 //        Vertx vertx = Vertx.vertx();
 //
-//       NetServer server= vertx.createNetServer();
+//       NetServer service= vertx.createNetServer();
 //
-//        server.connectHandler(socket -> {
+//        service.connectHandler(socket -> {
 //
 //            socket.handler(buffer -> {
 //                //获取对于的文件名

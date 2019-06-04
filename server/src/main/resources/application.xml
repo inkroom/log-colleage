@@ -6,7 +6,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <context:component-scan base-package="cn.inkroom.log.server.config"/>
-    <context:component-scan base-package="cn.inkroom.log.server.server"/>
+    <context:component-scan base-package="cn.inkroom.log.server.service"/>
     <context:component-scan base-package="cn.inkroom.log.server.dao"/>
     <context:component-scan base-package="cn.inkroom.log.server.quartz"/>
     <context:component-scan base-package="cn.inkroom.log.quartz"/>
@@ -40,7 +40,7 @@
     </bean>
 
     <!--定时任务配置-->
-    <!--<bean id="jobFactory" class="cn.inkroom.log.server.quartz.cn.inkroom.log.quartz.AutoSpringBeanJobFactory"/>-->
+    <!--<bean id="jobFactory" class="cn.inkroom.log.service.quartz.cn.inkroom.log.quartz.AutoSpringBeanJobFactory"/>-->
 
     <!--<bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">-->
         <!--<property name="jobFactory" ref="jobFactory"/>-->
@@ -64,7 +64,7 @@
     <!--&lt;!&ndash;<property name="jobFactory" ref="jobFactory"/>&ndash;&gt;-->
     <!--&lt;!&ndash;</bean>&ndash;&gt;-->
 
-    <!--<bean class="cn.inkroom.log.server.quartz.cn.inkroom.log.quartz.SchedulerManager">-->
+    <!--<bean class="cn.inkroom.log.service.quartz.cn.inkroom.log.quartz.SchedulerManager">-->
         <!--<property name="schedulerFactoryBean" ref="schedulerFactoryBean"/>-->
     <!--</bean>-->
 

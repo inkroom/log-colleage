@@ -1,4 +1,4 @@
-package cn.inkroom.log.server.server;
+package cn.inkroom.log.server.service;
 
 import cn.inkroom.log.model.LogBackup;
 import cn.inkroom.log.model.LogMsg;
@@ -33,7 +33,9 @@ public class BackupService {
 
     private LogFormat format = new LogFormat();//格式
 
-
+    public BackupService() {
+        logger.debug("创建备份服务");
+    }
 
     @Autowired(required = false)
     public void setFormat(LogFormat format) {
@@ -50,6 +52,7 @@ public class BackupService {
         }
 
     }
+
     /**
      * 备份日志到文件
      *
@@ -79,7 +82,6 @@ public class BackupService {
         }
 
         //记录备份时间范围
-
 
 
         return msgs.size();
