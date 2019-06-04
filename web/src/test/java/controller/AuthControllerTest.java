@@ -29,8 +29,13 @@ public class AuthControllerTest extends BasicControllerTest {
         jdbcTemplate.execute("delete  from LOGIN_LOG");
         String url = "/auth/login";
         MvcResult result = mvc.perform(get(url)
+<<<<<<< HEAD
                 .param("username", "admin")
                 .param("password", "admin")
+=======
+                .param("username", username)
+                .param("password", password)
+>>>>>>> 4d1029b3b78a8785d92e47153f90fbe2cf99e0f5
                 .header("User-Agent", "Junit test")
         )
                 .andExpect(status().isOk())

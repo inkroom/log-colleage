@@ -30,7 +30,11 @@ public class IndexController {
     @Autowired
     private ServerService serverService;
 
+<<<<<<< HEAD
     @RequestMapping({"index","/"})
+=======
+    @RequestMapping({"/index","/"})
+>>>>>>> 4d1029b3b78a8785d92e47153f90fbe2cf99e0f5
     public String index() throws RuntimeException {
 
         logger.debug("{}", PropertiesHandler.getProperties());

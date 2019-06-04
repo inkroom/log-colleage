@@ -10,7 +10,7 @@
       layout:decorate="common/_layout">
 
 <head>
-    <title>报警记录</title>
+    <title>宕机记录</title>
     <style>
         .message-container {
             overflow-y: scroll;
@@ -22,34 +22,11 @@
 
 <body>
 <th:block layout:fragment="content">
-<<<<<<< HEAD
     <ul>
         <li v-for="(item,i) in list" :key="i">
-            tag：{{item.tag}} ip：{{item.ip}} 报警时间：{{item.createdAt | time}} 消息：{{ item.message }}
+            ip：{{item.ip}} 宕机时间：{{item.createdAt | time}}
         </li>
     </ul>
-=======
-    <el-row v-for=" n in Math.ceil( list.length / 3)">
-        <el-col :span="6" :offset="index % 3 ==0 ? 2:1"
-                v-for=" (item,index ) in list.slice( (n -1) * 3, (n)*3 ) ">
-            <el-card >
-                <p>
-                    <span>ip: {{item.ip}}</span>
-                    <span>tag: {{ item.status?'存活':'宕机' }}</span>
-                </p>
-                <p>
-                    <span>报名时间: {{ item.createdAt | time }}</span>
-                </p>
-                <p>
-                    <span>报警方式: 邮件</span>
-                </p>
-                <p>
-                    <span>消息: {{  item.message }}</span>
-                </p>
-            </el-card>
-        </el-col>
-    </el-row>
->>>>>>> 4d1029b3b78a8785d92e47153f90fbe2cf99e0f5
 </th:block>
 <th:block layout:fragment="script">
     <script type="text/javascript">

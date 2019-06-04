@@ -28,8 +28,6 @@ public class SocketLogServer extends AbstractLogReceiverService implements WebSo
     @Override
     public boolean onMessage(String message, String channel) {
         logger.debug("收到日志消息={}", message);
-
-
         //发送日志
         socketSessions.forEach(webSocketSession -> {
             WebSocketMessage<String> socketMessage = new TextMessage(message);
@@ -48,15 +46,7 @@ public class SocketLogServer extends AbstractLogReceiverService implements WebSo
         socketSessions.add(webSocketSession);
         if (socketSessions.size() == 1) {//第一个socket链接，此时才订阅频道
             bind();
-//            logger.info("注册日志发送频道,channel={},type=topic", channel);
-//            center.addListener(this, channel, true);
-
         }
-    }
-
-    @Override
-    public void handleMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage) throws Exception {
-        logger.debug("收到socket client消息={}", webSocketMessage.getPayload());
     }
 
     @Override
@@ -76,8 +66,12 @@ public class SocketLogServer extends AbstractLogReceiverService implements WebSo
         socketSessions.remove(webSocketSession);
         if (socketSessions.size() == 0) {//没有人关心，此时移除订阅
             unbind();
-//            center.removeListener(this, channel);
         }
+    }
+
+    @Override
+    public void handleMessage(WebSocketSession webSocketSession, WebSocketMessage<?> webSocketMessage) throws Exception {
+        logger.debug("收到socket client消息={}", webSocketMessage.getPayload());
     }
 
     @Override
