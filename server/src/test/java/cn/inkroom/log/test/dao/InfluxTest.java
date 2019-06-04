@@ -55,7 +55,8 @@ public class InfluxTest extends BaseTest {
 
         List<LogMsg> msg = dao.selectByTime(now.getTime() - 3600 * 1000, new Date().getTime());
         logger.debug("{}", msg);
-        if (!msg.isEmpty()) {
+
+        if (msg != null && !msg.isEmpty()) {
             logger.debug("时间，注意时区={}", msg.get(0).getTime());
         }
 

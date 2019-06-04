@@ -25,10 +25,6 @@
             <!--<outputDirectory>/</outputDirectory>-->
         <!--</fileSet>-->
         <fileSet>
-            <directory>src/main/webapp</directory>
-            <outputDirectory>/webapp</outputDirectory>
-        </fileSet>
-        <fileSet>
             <directory>${project.build.directory}/config</directory>
             <outputDirectory>/config</outputDirectory>
         </fileSet>
@@ -42,7 +38,7 @@
     </fileSets>
     <files>
         <file>
-            <source>${project.basedir}/log_web.mv.db</source>
+            <source>${project.basedir}/log_server.mv.db</source>
             <outputDirectory>/</outputDirectory>
         </file>
     </files>
