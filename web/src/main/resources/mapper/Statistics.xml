@@ -37,10 +37,10 @@
         <if test="level != -1">
             and level = #{level}
         </if>
-        <if test="start != end">
+        <if test="start != null">
             and created_at >= #{start}
         </if>
-        <if test="end != end">
+        <if test="end != null">
             and #{end} >= created_at
         </if>
     </select>

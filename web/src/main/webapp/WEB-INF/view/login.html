@@ -12,11 +12,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+        [v-clock]{
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
 <div id="container" style="max-width: 300px;margin:100px auto">
-    <el-form :model="account" status-icon :rules="rule" ref="form" label-width="100px">
+    <el-form :model="account" status-icon :rules="rule" ref="form" label-width="100px" v-clock>
         <el-form-item label="账号" prop="username">
             <el-input type="text" v-model="account.username" autocomplete="off"></el-input>
         </el-form-item>

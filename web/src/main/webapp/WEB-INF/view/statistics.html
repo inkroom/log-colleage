@@ -24,13 +24,13 @@
 <th:block layout:fragment="content">
     <div>
         <el-select v-model="tag" placeholder="tag" @change="filter">
-            <el-option label="所有" value="">
+            <el-option label="所有tag" value="">
             </el-option>
             <el-option th:each="tag : ${tags}" th:label="${tag}" th:value="${tag}">
             </el-option>
         </el-select>
         <el-select v-model="ip" placeholder="ip" @change="filter">
-            <el-option label="所有" value="">
+            <el-option label="所有ip" value="">
             </el-option>
             <el-option th:each="ip : ${ips}" th:label="${ip}" th:value="${ip}">
             </el-option>

@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author 墨盒
@@ -79,7 +81,22 @@ public class StatisticsService {
 
     public List<Statistics> list(String tag, String ip, int level, Date start, Date end, int page, int size) {
 
-        //TODO 19-5-9 预留分页功能
-        return dao.select(tag, ip, level, start, end);
+        List<Statistics> res = dao.select(tag, ip, level, start, end);
+
+//TODO 19-5-9 预留分页功能
+        List<Statistics> result = new ArrayList<>(res.size());
+        res.forEach(statistics -> {
+            for (int i = 0; i < result.size(); i++) {
+                if (result.get(i).getIp().equals(statistics.getIp()) && result.get(i).getTag().equals(statistics.getTag())
+                        && result.get(i).getLevel() == statistics.getLevel()) {
+                    result.get(i).setCount(result.get(i).getCount() + statistics.getCount());
+                    return;
+                }
+            }
+            result.add(statistics);
+        });
+
+
+        return result;
     }
 }
