@@ -17,7 +17,7 @@ public class Entry {
     public static final String CONTEXT = "/";
 
     //FIXME: 2019-2-7 目录结构有问题，开发模式可以加上web，打包的时候注意测试是否可以
-    private static final String DEFAULT_WEBAPP_PATH = "web/src/main/webapp";
+    private static final String DEFAULT_WEBAPP_PATH = Object.class.getResource("/") + "webapp";
 
     public static Server createServerIn(int port) {
 
@@ -40,7 +40,8 @@ public class Entry {
 //        connector.setMaxIdleTime(10000);
 //        service.addConnector(connector);
 
-        WebAppContext webContext = new WebAppContext(DEFAULT_WEBAPP_PATH, CONTEXT);
+        WebAppContext webContext = new WebAppContext();
+        webContext.setContextPath(CONTEXT);
         webContext.setDescriptor(DEFAULT_WEBAPP_PATH + "/WEB-INF/web.xml");
         webContext.setResourceBase(DEFAULT_WEBAPP_PATH);
         webContext.setClassLoader(Thread.currentThread().getContextClassLoader());
@@ -52,8 +53,10 @@ public class Entry {
         // TODO Auto-generated method stub
 //        DOMConfigurator.configure(Thread.currentThread().getContextClassLoader()
 //                .getResource("log4j.xml"));
+
         Server server = createServerIn(PORT);
         server.stop();
+        System.out.println("开始server");
         server.start();
 //        service.join();
     }

@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0
+                    http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+    <id></id>
+    <formats>
+        <format>zip</format><!--打包的文件格式,也可以有：war zip-->
+    </formats>
+    <!--tar.gz压缩包下是否生成和项目名相同的根目录-->
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <dependencySets>
+        <dependencySet>
+            <!--是否把本项目添加到依赖文件夹下-->
+            <useProjectArtifact>true</useProjectArtifact>
+            <outputDirectory>lib</outputDirectory>
+            <!--将scope为runtime的依赖包打包-->
+            <!--<scope>runtime</scope>-->
+        </dependencySet>
+    </dependencySets>
+
+    <fileSets>
+        <!--<fileSet>-->
+            <!--<directory>${project.build.directory}/lib</directory>-->
+            <!--<outputDirectory>/</outputDirectory>-->
+        <!--</fileSet>-->
+        <fileSet>
+            <directory>${project.build.directory}/config</directory>
+            <outputDirectory>/config</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/webapp</directory>
+            <outputDirectory>/webapp</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/config</directory>
+            <outputDirectory>/config</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+    <files>
+        <file>
+            <source>${project.basedir}/log_web.mv.db</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+    </files>
+</assembly>

@@ -15,7 +15,7 @@
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
         <vertx.version>3.6.3</vertx.version>
     </properties>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <artifactId>web</artifactId>
     <version>1.0-SNAPSHOT</version>
     <description>负责日志文件的查询下载，查看各server的状态</description>
@@ -216,7 +216,19 @@
         <!--<finalName>generateImportCarSql</finalName>-->
         <!--<sourceDirectory>src/main/java</sourceDirectory>-->
         <resources>
-
+            <resource>
+                <directory>${project.basedir}/src/main/webapp</directory>
+                <!--注意此次必须要放在此目录下才能被访问到-->
+                <targetPath>webapp</targetPath>
+                <includes>
+                    <include>**/**</include>
+                </includes>
+            </resource>
+            <!-- -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+            <!--作者：heguiliang_123-->
+            <!--来源：CSDN-->
+            <!--原文：https://blog.csdn.net/heguiliang_123/article/details/80345356-->
+            <!--版权声明：本文为博主原创文章，转载请附上博文链接！-->
             <!-- 控制资源文件的拷贝 -->
             <resource>
                 <directory>src/main/resources</directory>
@@ -261,7 +273,7 @@
                 </dependencies>
                 <configuration>
                     <driver>org.h2.Driver</driver>
-                    <url>jdbc:h2:./../log_web</url>
+                    <url>jdbc:h2:${project.basedir}/log_web</url>
                     <!--<username>sa</username>-->
                     <!--<password></password>-->
                     <srcFiles>
@@ -296,14 +308,14 @@
                     <archive>
                         <!-- 清单文件 -->
                         <manifest>
-                            <mainClass>cn.inkroom.log.server.Entry</mainClass>
+                            <mainClass>cn.inkroom.log.web.Entry</mainClass>
                             <addClasspath>true</addClasspath>
                             <!--<class></class>-->
-                            <classpathPrefix>lib/*</classpathPrefix>
+                            <classpathPrefix>lib</classpathPrefix>
                         </manifest>
                         <!-- 给清单文件添加键值对(配置文件外置) -->
                         <manifestEntries>
-                            <Class-Path>config/</Class-Path>
+                            <Class-Path>./ ./config/</Class-Path>
                         </manifestEntries>
                     </archive>
                     <classesDirectory>
@@ -335,7 +347,7 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.5</version>
                 <configuration>
-                    <encoding>UTF-8</encoding>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
             <!-- 打包source文件为jar文件 -->
@@ -352,6 +364,23 @@
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution><!-- 配置执行器 -->
+                        <id>make-assembly</id>
+                        <phase>package</phase><!-- 绑定到package生命周期阶段上 -->
+                        <goals>
+                            <goal>single</goal><!-- 只运行一次 -->
+                        </goals>
+                        <configuration>
+                            <finalName>${project.name}</finalName>
+                            <descriptor>src/test/resources/assembly.xml</descriptor><!--配置描述文件路径-->
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
