@@ -97,6 +97,18 @@
                     var ip = value[0];
 
                     var _this = this;
+                    var index = _this.ips.findIndex(function (d) {
+                        return d.ip === ip
+                    });
+                    if (index !== -1) {
+                        console.log('index='+index)
+                        console.log(_this.ips);
+                        if (!_this.ips[index].status) {
+                            _this.$message.warning(ip + ' 已宕机');
+                            return;
+                        }
+                    }
+
                     axios.get('fileList', {params: {ip: ip}}).then(function (res) {
                         if (res.data.code === 0)
                             for (var i = 0; i < _this.ips.length; i++) {
