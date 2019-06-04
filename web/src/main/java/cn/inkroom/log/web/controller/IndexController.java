@@ -4,7 +4,6 @@ import cn.inkroom.log.model.Server;
 import cn.inkroom.log.web.bean.MessageDto;
 import cn.inkroom.log.web.handler.PropertiesHandler;
 import cn.inkroom.log.web.service.ServerService;
-import com.alibaba.fastjson.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +29,7 @@ public class IndexController {
     @Autowired
     private ServerService serverService;
 
-<<<<<<< HEAD
-    @RequestMapping({"index","/"})
-=======
     @RequestMapping({"/index","/"})
->>>>>>> 4d1029b3b78a8785d92e47153f90fbe2cf99e0f5
     public String index() throws RuntimeException {
 
         logger.debug("{}", PropertiesHandler.getProperties());

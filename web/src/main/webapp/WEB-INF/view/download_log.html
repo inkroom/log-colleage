@@ -22,13 +22,6 @@
 
 <body>
 <th:block layout:fragment="content">
-<<<<<<< HEAD
-    <ul>
-        <li v-for="(item,i) in list" :key="i">
-            用户：{{item.account}} 文件：{{item.file}} 日志条数：{{ item.size }} 日志开始时间：{{item.start | time}} 日志结束时间：{{item.end | time}} 下载时间：{{ item.createdAt | time  }}
-        </li>
-    </ul>
-=======
     <el-row v-for=" n in Math.ceil( list.length / 3)">
         <el-col :span="6" :offset="index % 3 ==0 ? 2:1"
                 v-for=" (item,index ) in list.slice( (n -1) * 3, (n)*3 ) ">
@@ -60,7 +53,6 @@
 <!--            time}} 下载时间：{{ item.createdAt | time }}-->
 <!--        </li>-->
 <!--    </ul>-->
->>>>>>> 4d1029b3b78a8785d92e47153f90fbe2cf99e0f5
 </th:block>
 <th:block layout:fragment="script">
     <script type="text/javascript">

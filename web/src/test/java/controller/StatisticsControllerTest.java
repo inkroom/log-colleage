@@ -18,35 +18,14 @@ public class StatisticsControllerTest extends BasicControllerTest {
     @Test
     public void testIndex() throws Exception {
         String url = "/index";
-<<<<<<< HEAD
-        mvc.perform(get(url)).andExpect(status().isOk()).andExpect(view().name("index"));
-=======
         mvc.perform(get(url).session(session)).andExpect(status().isOk()).andExpect(view().name("index"));
->>>>>>> 4d1029b3b78a8785d92e47153f90fbe2cf99e0f5
 
     }
 
     @Test
     public void testList() throws Exception {
 
-<<<<<<< HEAD
-        MockHttpSession session = new MockHttpSession();
-        String url = "/auth/login";
-        mvc.perform(get(url)
-                .param("username", "admin")
-                .param("password", "admin")
-                .header("User-Agent", "Junit test")
-                .session(session)
-        )
-                .andExpect(status().isOk())
-//                .andExpect(content().string(new MessageDto<>(0, new ArrayList<>()).toString()))
-                .andExpect(jsonPath("$.code").value(0));
-
-
-        url = "/statistics";
-=======
         String url = "/statistics";
->>>>>>> 4d1029b3b78a8785d92e47153f90fbe2cf99e0f5
         MvcResult result = mvc.perform(post(url).session(session))
                 .andExpect(status().isOk())
 //                .andExpect(content().string(new MessageDto<>(0, new ArrayList<>()).toString()))
