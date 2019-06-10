@@ -24,10 +24,10 @@
             <!--<directory>${project.build.directory}/lib</directory>-->
             <!--<outputDirectory>/</outputDirectory>-->
         <!--</fileSet>-->
-        <fileSet>
-            <directory>src/main/webapp</directory>
-            <outputDirectory>/webapp</outputDirectory>
-        </fileSet>
+        <!--<fileSet>-->
+            <!--<directory>src/main/webapp</directory>-->
+            <!--<outputDirectory>/webapp</outputDirectory>-->
+        <!--</fileSet>-->
         <fileSet>
             <directory>${project.build.directory}/config</directory>
             <outputDirectory>/config</outputDirectory>

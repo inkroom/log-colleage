@@ -3,6 +3,9 @@ package cn.inkroom.log.web;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.springframework.core.io.ClassPathResource;
+
+import java.io.IOException;
 
 /**
  * 入口启动类
@@ -17,13 +20,25 @@ public class Entry {
     public static final String CONTEXT = "/";
 
     //FIXME: 2019-2-7 目录结构有问题，开发模式可以加上web，打包的时候注意测试是否可以
-    private static final String DEFAULT_WEBAPP_PATH = Object.class.getResource("/") + "webapp";
+    private static String DEFAULT_WEBAPP_PATH = null;
+
+    static {
+        try {
+            DEFAULT_WEBAPP_PATH = new ClassPathResource("webapp").getURI().toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static Server createServerIn(int port) {
 
 //        System.out.println(Object.class.getResource("/"));
-//        System.out.println(Entry.class.getClassLoader().getResource(".").getPath());
-
+//        System.out.println(Entry.class.getClassLoader().getResource("./").getPath());
+//        try {
+//            System.out.println(new ClassPathResource("webapp").getURI().toString());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         // 创建Server
         Server server = new Server(port);
         // 添加ThreadPool
@@ -44,8 +59,24 @@ public class Entry {
         webContext.setContextPath(CONTEXT);
         webContext.setDescriptor(DEFAULT_WEBAPP_PATH + "/WEB-INF/web.xml");
         webContext.setResourceBase(DEFAULT_WEBAPP_PATH);
+
+//        webContext.setExtraClasspath("./");
         webContext.setClassLoader(Thread.currentThread().getContextClassLoader());
         server.setHandler(webContext);
+
+
+//        ContextHandler contextHandler = new ContextHandler("/index");
+//        ResourceHandler resourceHandler = new ResourceHandler();
+//        resourceHandler.setDirectoriesListed(true);
+//        //   log.info(Application.class.getClassLoader().getResource("template").getPath());
+////            resourceHandler.setResourceBase(Objects
+////                    .requireNonNull(Application.class.getClassLoader().getResource("template")).getPath());
+//        resourceHandler.setBaseResource(Resource.newResource(Application.class.getClassLoader().getResource("template")));
+//        resourceHandler.setWelcomeFiles(new String[]{"index.html"});
+//        contextHandler.setHandler(resourceHandler);
+//        server.setHandler(contextHandler);
+
+
         return server;
     }
 
