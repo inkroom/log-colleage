@@ -356,6 +356,7 @@
                 <version>2.1</version>
                 <configuration>
                     <attach>true</attach>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                     <!--<encoding>UTF-8</encoding>-->
                 </configuration>
                 <executions>

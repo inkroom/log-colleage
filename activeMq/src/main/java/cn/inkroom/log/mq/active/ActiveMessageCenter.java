@@ -2,7 +2,6 @@ package cn.inkroom.log.mq.active;
 
 import cn.inkroom.log.mq.MessageCenter;
 import cn.inkroom.log.mq.MessageListener;
-import cn.inkroom.log.mq.MessageSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +17,7 @@ public class ActiveMessageCenter implements MessageCenter {
     private Logger logger = LoggerFactory.getLogger(getClass());
     private Session session;
 
-    private Hashtable<MessageListener, ActiveMessageListener> listeners;
+    private Hashtable<MessageListener, ActiveMessageListenerContainer> listeners;
 
     public ActiveMessageCenter(Session session) {
         this.session = session;
@@ -37,11 +36,11 @@ public class ActiveMessageCenter implements MessageCenter {
                 destination = session.createQueue(channel);
             }
             consumer = session.createConsumer(destination);
-//            if (listener instanceof ActiveMessageListener) {
-            ActiveMessageListener activeMessageListener = new ActiveMessageListener(listener, consumer, channel);
+//            if (listener instanceof ActiveMessageListenerContainer) {
+            ActiveMessageListenerContainer activeMessageListenerContainer = new ActiveMessageListenerContainer(listener, consumer, channel);
 
-            listeners.put(listener, activeMessageListener);
-            new Thread(activeMessageListener).start();
+            listeners.put(listener, activeMessageListenerContainer);
+            new Thread(activeMessageListenerContainer).start();
 
 //            }
         } catch (JMSException e) {
@@ -52,7 +51,7 @@ public class ActiveMessageCenter implements MessageCenter {
 
     @Override
     public void removeListener(MessageListener listener, String channel) {
-        ActiveMessageListener lis = listeners.get(listener);
+        ActiveMessageListenerContainer lis = listeners.get(listener);
         if (lis != null && lis.getChannel().equals(channel)) {
             lis.setStop(true);
             listeners.remove(listener);
